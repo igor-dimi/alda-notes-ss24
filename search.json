@@ -4,27 +4,20 @@
     "href": "index.html",
     "title": "Algorithms & Data Structures Notes - SoSe 24",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books."
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "crumbs": [
+      "Preface"
+    ]
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
+    "objectID": "02-intro/02-analysis.html",
+    "href": "02-intro/02-analysis.html",
+    "title": "1  Program Run-time Analysis",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
-  },
-  {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
-    "section": "",
-    "text": "In summary, this book has no content whatsoever."
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
+    "text": "1.1 Reccurence Relations\nConsider a very simple reccurence relation:\n\\[\n    T(n) :=\n    \\begin{cases}\n        1               & n = 1 \\\\\n        n + T(n - 1),   & n &gt; 1\n    \\end{cases}\n\\]\nWith mathematical induction we can formally show that \\(T(n)\\) is quadratic. But there is a simpler & more intuitive way:\n\\[\\begin{align*}\n    T(n) &= n + T(n - 1)            \\tag{Def $T(\\cdot)$} \\\\\n         &= n + n - 1 + T(n - 2)  \\\\\n         &= \\dots \\tag{Repeat $n - 2$ times}\\\\\n         &= n + n - 1 + \\dots + T(1) \\\\\n         &= n + n - 1 + \\dots + 1 \\tag{Def $T(1)$} \\\\\n         &= \\frac{n(n + 1)}{2} \\tag{Gauss}\\\\\n         &\\in \\mathcal{O}(n^2)\n\\end{align*}\\]\nThis method can be applied to the more complex divide-and-conquer reccurence relation from the lecture:\n\\[\n    R(n) :=\n    \\begin{cases}\n        a, &n = 1 \\\\\n        c\\dot n + d\\cdot R(\\frac{n}{b}), &n &gt; 1\n    \\end{cases}\n\\]\nApplying the above method we expand \\(R(\\cdot)\\) repetitively according to its definition until we reach the base case, rearranging terms when necessary:\n\\[\\begin{align*}\n    R(n) &= c\\cdot n + d\\cdot R(\\frac{n}{b}) \\tag{Def $R(\\cdot)$} \\\\\n         &= c\\cdot n + d\\bigl(c\\frac{n}{b} + d\\cdot R(\\frac{n}{b^2})\\bigr) \\tag{Def $R(\\cdot)$} \\\\\n         &= c\\cdot n + d\\Bigl(c\\frac{n}{b} + d\\cdot \\bigl(c\\cdot \\frac{n}{b^2} + d\\cdot R(\\frac{n}{b^2})\\bigr)\\Bigr) \\tag{Def $R(\\cdot)$} \\\\\n         &= c\\cdot n + d\\cdot c\\frac{n}{b} + d^2c\\frac{n}{b^2} + d^3\\cdot R(\\frac{n}{b^3}) \\tag{Rearrange} \\\\\n         &= c\\cdot n \\left(1 + \\frac{d}{b} + \\frac{d^2}{b^2}\\right) + d^3\\cdot R(\\frac{n}{b^3}) \\tag{Rearrange} \\\\\n         &= \\dots \\tag{Repeat $k$-times} \\\\\n         &= c\\cdot n\\left(1 + \\frac{d}{b} + \\dots + \\frac{d^{k - 1}}{b^{k - 1}}\\right) + d^k \\cdot R(\\frac{n}{b^k}) \\\\\n         &= c\\cdot n \\sum_{i = 0}^{k - 1}\\left(\\frac{d}{b}\\right)^i + d^k \\cdot R(\\frac{n}{b^k}) \\tag{$\\Sigma$-notation} \\\\\n         &= c\\cdot n \\sum_{i = 0}^{k - 1}\\left(\\frac{d}{b}\\right)^i + d^k \\cdot R(1) \\tag{Ass $\\frac{n}{b^k} = 1$} \\\\\n         &= c\\cdot n \\sum_{i = 0}^{k - 1}\\left(\\frac{d}{b}\\right)^i + a\\cdot d^k \\tag{Def $R(1)$}\n\\end{align*}\\]\nSee lecture slides for the complexity analysis of final expression.",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Program Run-time Analysis</span>"
+    ]
   }
 ]
