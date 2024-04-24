@@ -7,17 +7,21 @@ book:
   date: "4/22/2024"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
+    - part: "Introduction"
+      chapters:
+        - 02-intro/02-analysis.qmd
+
+  downloads: pdf
 
 bibliography: references.bib
 
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
+  pdf: 
+    include-in-header:
+      - text: |
+          \usepackage{cases}
 
 
 

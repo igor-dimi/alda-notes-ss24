@@ -1,0 +1,56 @@
+---
+title: "Program Run-time Analysis"
+---
+
+## Reccurence Relations 
+
+Consider a very simple reccurence relation:
+
+$$
+    T(n) := 
+    \begin{cases}
+        1               & n = 1 \\
+        n + T(n - 1),   & n > 1
+    \end{cases}
+$$
+
+With **mathematical induction** we can formally show
+that $T(n)$ is quadratic. But there is a simpler & more intuitive way:
+
+\begin{align*}
+    T(n) &= n + T(n - 1)            \tag{Def $T(\cdot)$} \\
+         &= n + n - 1 + T(n - 2)  \\
+         &= \dots \tag{Repeat $n - 2$ times}\\
+         &= n + n - 1 + \dots + T(1) \\
+         &= n + n - 1 + \dots + 1 \tag{Def $T(1)$} \\
+         &= \frac{n(n + 1)}{2} \tag{Gauss}\\
+         &\in \mathcal{O}(n^2)
+\end{align*}
+
+This method can be applied to the more complex divide-and-conquer reccurence relation from the lecture:
+
+$$
+    R(n) := 
+    \begin{cases}
+        a, &n = 1 \\
+        c\dot n + d\cdot R(\frac{n}{b}), &n > 1
+    \end{cases}
+$$
+
+Applying the above method we expand $R(\cdot)$ repetitively according to its definition until we reach
+the base case, rearranging terms when necessary:
+
+\begin{align*}
+    R(n) &= c\cdot n + d\cdot R(\frac{n}{b}) \tag{Def $R(\cdot)$} \\
+         &= c\cdot n + d\bigl(c\frac{n}{b} + d\cdot R(\frac{n}{b^2})\bigr) \tag{Def $R(\cdot)$} \\
+         &= c\cdot n + d\Bigl(c\frac{n}{b} + d\cdot \bigl(c\cdot \frac{n}{b^2} + d\cdot R(\frac{n}{b^2})\bigr)\Bigr) \tag{Def $R(\cdot)$} \\
+         &= c\cdot n + d\cdot c\frac{n}{b} + d^2c\frac{n}{b^2} + d^3\cdot R(\frac{n}{b^3}) \tag{Rearrange} \\
+         &= c\cdot n \left(1 + \frac{d}{b} + \frac{d^2}{b^2}\right) + d^3\cdot R(\frac{n}{b^3}) \tag{Rearrange} \\
+         &= \dots \tag{Repeat $k$-times} \\
+         &= c\cdot n\left(1 + \frac{d}{b} + \dots + \frac{d^{k - 1}}{b^{k - 1}}\right) + d^k \cdot R(\frac{n}{b^k}) \\
+         &= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(\frac{n}{b^k}) \tag{$\Sigma$-notation} \\
+         &= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(1) \tag{Ass $\frac{n}{b^k} = 1$} \\
+         &= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + a\cdot d^k \tag{Def $R(1)$} 
+\end{align*}
+
+See lecture slides for the complexity analysis of final expression. 
