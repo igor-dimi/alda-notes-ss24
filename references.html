@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Algorithms &amp; Data Structures Notes - SoSe 24 - 1&nbsp; Program Run-time Analysis</title>
+<title>Algorithms &amp; Data Structures Notes - SoSe 24 - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,45 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./summary.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -61,8 +80,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -75,7 +92,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html">Introduction</a></li><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -90,10 +107,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Algorithms &amp; Data Structures Notes - SoSe 24</a> 
-        <div class="sidebar-tools-main">
-    <a href="../Algorithms---Data-Structures-Notes---SoSe-24.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
-</div>
+      <a href="./">Algorithms &amp; Data Structures Notes - SoSe 24</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -105,47 +119,42 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text">Introduction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02-intro/02-analysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
   </div>
 </li>
-      </ul>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#reccurence-relations" id="toc-reccurence-relations" class="nav-link active" data-scroll-target="#reccurence-relations"><span class="header-section-number">1.1</span> Reccurence Relations</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -160,51 +169,14 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="reccurence-relations" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="reccurence-relations"><span class="header-section-number">1.1</span> Reccurence Relations</h2>
-<p>Consider a very simple reccurence relation:</p>
-<p><span class="math display">\[
-    T(n) :=
-    \begin{cases}
-        1               &amp; n = 1 \\
-        n + T(n - 1),   &amp; n &gt; 1
-    \end{cases}
-\]</span></p>
-<p>With <strong>mathematical induction</strong> we can formally show that <span class="math inline">\(T(n)\)</span> is quadratic. But there is a simpler &amp; more intuitive way:</p>
-<p><span class="math display">\[\begin{align*}
-    T(n) &amp;= n + T(n - 1)            \tag{Def $T(\cdot)$} \\
-         &amp;= n + n - 1 + T(n - 2)  \\
-         &amp;= \dots \tag{Repeat $n - 2$ times}\\
-         &amp;= n + n - 1 + \dots + T(1) \\
-         &amp;= n + n - 1 + \dots + 1 \tag{Def $T(1)$} \\
-         &amp;= \frac{n(n + 1)}{2} \tag{Gauss}\\
-         &amp;\in \mathcal{O}(n^2)
-\end{align*}\]</span></p>
-<p>This method can be applied to the more complex divide-and-conquer reccurence relation from the lecture:</p>
-<p><span class="math display">\[
-    R(n) :=
-    \begin{cases}
-        a, &amp;n = 1 \\
-        c\dot n + d\cdot R(\frac{n}{b}), &amp;n &gt; 1
-    \end{cases}
-\]</span></p>
-<p>Applying the above method we expand <span class="math inline">\(R(\cdot)\)</span> repetitively according to its definition until we reach the base case, rearranging terms when necessary:</p>
-<p><span class="math display">\[\begin{align*}
-    R(n) &amp;= c\cdot n + d\cdot R(\frac{n}{b}) \tag{Def $R(\cdot)$} \\
-         &amp;= c\cdot n + d\bigl(c\frac{n}{b} + d\cdot R(\frac{n}{b^2})\bigr)  \\
-         &amp;= c\cdot n + d\Bigl(c\frac{n}{b} + d\cdot \bigl(c\cdot \frac{n}{b^2} + d\cdot R(\frac{n}{b^2})\bigr)\Bigr)  \\
-         &amp;= c\cdot n + d\cdot c\frac{n}{b} + d^2c\frac{n}{b^2} + d^3\cdot R(\frac{n}{b^3}) \tag{Rearrange} \\
-         &amp;= c\cdot n \left(1 + \frac{d}{b} + \frac{d^2}{b^2}\right) + d^3\cdot R(\frac{n}{b^3}) \\
-         &amp;= \dots \tag{Repeat $k$-times} \\
-         &amp;= c\cdot n\left(1 + \frac{d}{b} + \dots + \frac{d^{k - 1}}{b^{k - 1}}\right) + d^k \cdot R(\frac{n}{b^k}) \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(\frac{n}{b^k}) \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(1) \tag{Ass $\frac{n}{b^k} = 1$} \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + a\cdot d^k \tag{Def $R(1)$}
-\end{align*}\]</span></p>
-<p>See lecture slides for the complexity analysis of final expression.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-knuth84" class="csl-entry" role="listitem">
+Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput.
+J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -442,8 +414,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./summary.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
