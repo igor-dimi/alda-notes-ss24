@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Igor Dimitrov">
-<meta name="dcterms.date" content="2024-04-22">
 
-<title>Algorithms &amp; Data Structures Notes - SoSe 24</title>
+<title>Algorithms &amp; Data Structures Notes - SoSe 24 - 2&nbsp; Lists</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,26 +20,60 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./02-intro/02-analysis.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../02-intro/02-analysis.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -63,6 +95,8 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -75,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../03/01-lists.html">Data Structures</a></li><li class="breadcrumb-item"><a href="../03/01-lists.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lists</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -90,9 +124,9 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Algorithms &amp; Data Structures Notes - SoSe 24</a> 
+      <a href="../">Algorithms &amp; Data Structures Notes - SoSe 24</a> 
         <div class="sidebar-tools-main">
-    <a href="./Algorithms---Data-Structures-Notes---SoSe-24.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Algorithms---Data-Structures-Notes---SoSe-24.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -105,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -120,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-intro/02-analysis.html" class="sidebar-item-text sidebar-link">
+  <a href="../02-intro/02-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></span></a>
   </div>
 </li>
@@ -137,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03/01-lists.html" class="sidebar-item-text sidebar-link">
+  <a href="../03/01-lists.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lists</span></span></a>
   </div>
 </li>
@@ -153,7 +187,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#sequences-as-arrays-and-lists" id="toc-sequences-as-arrays-and-lists" class="nav-link active" data-scroll-target="#sequences-as-arrays-and-lists"><span class="header-section-number">2.1</span> Sequences as Arrays and Lists</a></li>
+  <li><a href="#applications-of-lists" id="toc-applications-of-lists" class="nav-link" data-scroll-target="#applications-of-lists"><span class="header-section-number">2.2</span> Applications of Lists</a></li>
+  <li><a href="#linked-and-doubly-linked-lists" id="toc-linked-and-doubly-linked-lists" class="nav-link" data-scroll-target="#linked-and-doubly-linked-lists"><span class="header-section-number">2.3</span> Linked and Doubly Linked Lists</a>
+  <ul class="collapse">
+  <li><a href="#list-items" id="toc-list-items" class="nav-link" data-scroll-target="#list-items">List Items</a></li>
+  <li><a href="#the-list-class" id="toc-the-list-class" class="nav-link" data-scroll-target="#the-list-class">The List Class</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -162,26 +202,14 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Algorithms &amp; Data Structures Notes - SoSe 24</h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lists</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Igor Dimitrov </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 22, 2024</p>
-    </div>
-  </div>
   
     
   </div>
@@ -189,12 +217,127 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a Quarto book.</p>
-<p>To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<section id="sequences-as-arrays-and-lists" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sequences-as-arrays-and-lists"><span class="header-section-number">2.1</span> Sequences as Arrays and Lists</h2>
+<p>Many terms for same thing: sequence, field, list, stack, string, <strong>file</strong>… Yes, files are simply sequences of bytes!</p>
+<p>three views on lists:</p>
+<ul>
+<li><strong>abstract</strong>: <span class="math inline">\((2, 3, 5, 7)\)</span></li>
+<li><strong>functionality</strong>: stack, queue, etc… What operations does it support?</li>
+<li><strong>representation</strong>: How is the list represented in a given programming model/language/paradigm?</li>
+</ul>
+</section>
+<section id="applications-of-lists" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="applications-of-lists"><span class="header-section-number">2.2</span> Applications of Lists</h2>
+<ul>
+<li>Storing and processing any kinds of data</li>
+<li>Concrete representation of abstract data types such as: set, graph, etc…</li>
+</ul>
+</section>
+<section id="linked-and-doubly-linked-lists" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="linked-and-doubly-linked-lists"><span class="header-section-number">2.3</span> Linked and Doubly Linked Lists</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>simply linked</th>
+<th>doubly linked</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>lecture</td>
+<td><code>SList</code></td>
+<td><code>List</code></td>
+</tr>
+<tr class="even">
+<td>c++</td>
+<td><code>std::forward_list</code></td>
+<td><code>std::list</code></td>
+</tr>
+</tbody>
+</table>
+<p>Doubly linked lists are usually <strong>simpler</strong> and require “only” double the space at most. Therefore their use is more widespread.</p>
+<section id="list-items" class="level3">
+<h3 class="anchored" data-anchor-id="list-items">List Items</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Class Item of T :=</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    e: T</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    next: *Item //Pointer to Item</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    prev: *Item //Pointer to Item</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    invariant next-&gt;prev = this = prev-&gt;next</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="./imgs/d-list.png" class="img-fluid"></p>
+<p><strong>Problem</strong>: * predeccessor of first list element? * successor of last list element?</p>
+<p><strong>Solution</strong>: Dummy Item with an empty data field as follows:</p>
+<p><img src="./imgs/d-list-dummy.png" class="img-fluid"></p>
+<p>Advatanges of this solution:</p>
+<ul>
+<li><strong>Invariant</strong> is always satisfied</li>
+<li>Exceptions are avoided, thus making the coding more:
+<ul>
+<li>simple</li>
+<li>readable</li>
+<li>faster</li>
+<li>elegant</li>
+</ul></li>
+</ul>
+<p>Disadvantages: a little more storage space.</p>
+</section>
+<section id="the-list-class" class="level3">
+<h3 class="anchored" data-anchor-id="the-list-class">The List Class</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Class List of T :=</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    dummy := (</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        Null : T</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        &amp;dummy : *T // initially list is empty, therefore next points to the dummy itself</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        &amp;dummy : *T // initially list is empty, therefore prev points to the dummy itself</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ) : Item</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    // returns the address of the dummy, which represents the head of the list</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    Function head() : *Item :=</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        return address of dummy</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    // simple access functions</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    // returns true iff list empty</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    Function is_empty() : Bool := </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        return dummy.next == dummy </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    // returns pointer to first Item of the list, given list is not empty</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    Function first() : *Item :=</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        assert (not is_empty())</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        return dummy.next</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    // returns pointer to last Item of the list, given list is not empty</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Function last() : *Item :=</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        assert (not is_empty())</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        return dummy.last</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    /* Splice is an all-purpose tool to cut out parts from a list</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>       Cut out (a, ... b) form this list and insert after t */</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    Procedure splice(a, b, t : *Item) := </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        assert (</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>            b is not before a </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>            and </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>            t not between a and b</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        // Cut out (a, ... , b)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        a-&gt;prev-&gt;next := b-&gt;next</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        b-&gt;next-&gt;prev := a-&gt;prev</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        // insert (a, ... b) after t</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        t-&gt;next-&gt;prev := b</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        b-&gt;next := t-&gt;next</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        t-&gt;next := a</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        a-&gt;prev := t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Dlist cut-out <span class="math inline">\((a,...,b)\)</span>:</li>
+</ul>
+<p><img src="./imgs/d-list-cut-out.png" title="Title: dList cut-out $(a,...,b)$" class="img-fluid" style="width:70.0%" alt="dList cut-out (a...b)"></p>
+<ul>
+<li>Dlist insert <span class="math inline">\((a,...,b)\)</span> after <span class="math inline">\(t\)</span>:</li>
+</ul>
+<p><img src="./imgs/d-list-insert.png" title="Title: dList insert $(a,...,b)$ after $t$" class="img-fluid" style="width:70.0%" alt="dList insert (a,...,b) after t"></p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -433,11 +576,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../02-intro/02-analysis.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-intro/02-analysis.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
