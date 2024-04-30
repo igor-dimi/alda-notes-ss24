@@ -261,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="list-items" class="level3">
 <h3 class="anchored" data-anchor-id="list-items">List Items</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Class Item of T :=</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    e: T</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    e: T //Data item of type T</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    next: *Item //Pointer to Item</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    prev: *Item //Pointer to Item</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    invariant next-&gt;prev = this = prev-&gt;next</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    // returns pointer to last Item of the list, given list is not empty</span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    Function last() : *Item :=</span>
 <span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        assert (not is_empty())</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        return dummy.last</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        return dummy.prev</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    /* Splice is an all-purpose tool to cut out parts from a list</span>
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>       Cut out (a, ... b) form this list and insert after t */</span>
@@ -326,17 +326,159 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        t-&gt;next-&gt;prev := b</span>
 <span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        b-&gt;next := t-&gt;next</span>
 <span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        t-&gt;next := a</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        a-&gt;prev := t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>        a-&gt;prev := t</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    // Moving items by utilising splice</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    //Move item a after item b</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    Procedure move_after(a, b: *Item) := </span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        splice(a, a, b)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    // Move item a to the front of the list</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    Procedure move_to_front(a: *Item) := </span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        move_after(a, dummy)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    Procedure move_to_back(a: *Item) :=</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        move_after(b, last())</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    // Deleting items by moving them to a global freeList</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    // remove item a</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    Procedure remove(a: *Item) :=</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        move_after(b, freeList.dummy)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    // remove first item</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    Procedure pop_front() :=</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>        remove(first())</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    //remove last item</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    Procedure pop_back() :=</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        remove(last())</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    // Inserting Elements</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    // Insert an item with value x after item a</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    Function insert_after(x : T, a : *Item) : *Item := </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>        checkFreeList() //make sure freeList is non empty</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>        b := freeList.first() // obtain an item b to hold x</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>        move_after(b, a) // insert b after a</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>        b-&gt;e := x // set the data item value of b to x</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>        return b</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    // Manipulating whole lists</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    Procedure concat(L : List) :=</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>        splice(L.first(), L.last(), last()) //move whole of L after last element of this list</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    Procedure clear()</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>        freeList.concat(this) //after this operation from from first to last element of this</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                              // list are concatenated to the freeList, leaving only the </span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                              // dummy element in this list.</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    Fuction get(i )</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="splicing" class="level4">
+<h4 class="anchored" data-anchor-id="splicing">Splicing</h4>
+<p>The code for splicing of the <code>List</code> class:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>/* Splice is an all-purpose tool to cut out parts from a list</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    Cut out (a, ... b) form this list and insert after t */</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Procedure splice(a, b, t : *Item) := </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    assert (</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        b is not before a </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        and </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        t not between a and b</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    // Cut out (a, ... , b)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    a-&gt;prev-&gt;next := b-&gt;next</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    b-&gt;next-&gt;prev := a-&gt;prev</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    // insert (a, ... b) after t</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    t-&gt;next-&gt;prev := b</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    b-&gt;next := t-&gt;next</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    t-&gt;next := a</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    a-&gt;prev := t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li>Dlist cut-out <span class="math inline">\((a,...,b)\)</span>:</li>
+<li>Dlist cut-out <span class="math inline">\((a,...,b)\)</span> (see <a href="#fig-cutout">Figure&nbsp;<span>2.1</span></a>):</li>
 </ul>
-<p><img src="./imgs/d-list-cut-out.png" title="Title: dList cut-out $(a,...,b)$" class="img-fluid" style="width:70.0%" alt="dList cut-out (a...b)"></p>
+<div id="fig-cutout" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imgs/d-list-cut-out.png" title="Title: dList cut-out $(a,...,b)$" class="img-fluid figure-img" style="width:70.0%" alt="dList cut-out (a...b)"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.1: cutout</figcaption>
+</figure>
+</div>
 <ul>
-<li>Dlist insert <span class="math inline">\((a,...,b)\)</span> after <span class="math inline">\(t\)</span>:</li>
+<li>Dlist insert <span class="math inline">\((a,...,b)\)</span> after <span class="math inline">\(t\)</span> (see <a href="#fig-insert">Figure&nbsp;<span>2.2</span></a>):</li>
 </ul>
-<p><img src="./imgs/d-list-insert.png" title="Title: dList insert $(a,...,b)$ after $t$" class="img-fluid" style="width:70.0%" alt="dList insert (a,...,b) after t"></p>
+<div id="fig-insert" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imgs/d-list-insert.png" title="Title: dList insert $(a,...,b)$ after $t$" class="img-fluid figure-img" style="width:70.0%" alt="dList insert (a,...,b) after t"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.2: insert</figcaption>
+</figure>
+</div>
+</section>
+<section id="speicherverwaltung-..freelist" class="level4">
+<h4 class="anchored" data-anchor-id="speicherverwaltung-..freelist">Speicherverwaltung ./.FreeList</h4>
+<p>Methods (?):</p>
+<ul>
+<li>Niavely: allocate memory for each new element, deallocate memory after deleting each element:
+<ul>
+<li>advantage: simplicity</li>
+<li>disadvantage: requires a good implementation of memory management: potentially very slow</li>
+</ul></li>
+<li>“global” <code>freeList</code> (e.g.&nbsp;<code>static</code> member in C++)
+<ul>
+<li>doubly linked list of all not used elements</li>
+<li>transfer ‘deleted’ elements in <code>freeList</code>.</li>
+<li><code>checkFreeList</code> allocates, in case the list is empty</li>
+</ul></li>
+</ul>
+<p>Real implementations: * naiv but with well implemented, efficient memory management * refined Free List Approach (class-agnostic, release) * implementation-specific.</p>
+</section>
+<section id="deleting-elements" class="level4">
+<h4 class="anchored" data-anchor-id="deleting-elements">Deleting Elements</h4>
+<p>Deleting elements realised by moving them to the global <code>freeList</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Procedure remove(a: *Item) :=</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    move_after(a, freeList.dummy) // item a is now a 'free' item. </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Procedure pop_front() :=</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    remove(first())</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>Procedure pop_back() :=</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    remove(last())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="inserting-elements" class="level4">
+<h4 class="anchored" data-anchor-id="inserting-elements">Inserting Elements</h4>
+<p>Inserting elements into a list <span class="math inline">\(l\)</span> also utilizes <code>freeList</code>, by fetching its first element an moving it into <span class="math inline">\(l\)</span>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Function insert_after(x : T, a : *Item) : *Item := </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    checkFreeList() //make sure freeList is non empty</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    b := freeList.first() // obtain an item b to hold x</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    move_after(b, a) // insert b after a</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    b-&gt;e := x // set the data item value of b to x</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    return b</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Function insert_before(x : T, b : *Item) : *Item :=</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    return insert_after(x, b-&gt;prev)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>Procedure push_front(x : T) :=</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    insert_after(x, dummy)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>Procedure push_back(x : T) :=</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    insert_after(x, last())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="manipulating-whole-lists" class="level4">
+<h4 class="anchored" data-anchor-id="manipulating-whole-lists">Manipulating whole Lists</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>// Manipulating whole lists</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Procedure concat(L : List) :=</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    splice(L.first(), L.last(), last()) //move whole of L after last element of this list</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Procedure clear()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    freeList.concat(this) //after this operation from from first to last element of this</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                            // list are concatenated to the freeList, leaving only the </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                            // dummy element in this list.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This operations require <strong>constant time</strong> - indeendent of the list size!</p>
 
 
+</section>
 </section>
 </section>
 
