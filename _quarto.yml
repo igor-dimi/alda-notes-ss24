@@ -10,6 +10,9 @@ book:
     - part: "Introduction"
       chapters:
         - 02-intro/02-analysis.qmd
+    - part: "Data Structures"
+      chapters:
+        - 03/01-lists.qmd
 
   downloads: pdf
 

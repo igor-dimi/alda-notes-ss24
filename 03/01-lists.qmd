@@ -1,0 +1,124 @@
+---
+title: "Lists"
+number-depth: 2
+---
+
+## Sequences as Arrays and Lists
+
+Many terms for same thing: sequence, field, list, stack, string, **file**...
+Yes, files are simply sequences of bytes! 
+
+three views on lists:
+
+* **abstract**: $(2, 3, 5, 7)$
+* **functionality**: stack, queue, etc... What operations does it support? 
+* **representation**: How is the list represented in a given programming model/language/paradigm? 
+
+## Applications of Lists
+
+* Storing and processing any kinds of data
+* Concrete representation of abstract data types such as: set, graph, etc...
+
+## Linked and Doubly Linked Lists
+
+|         | simply linked       | doubly linked |
+| ------- | ------------------- | ------------- |
+| lecture | `SList`             | `List`        |
+| c++     | `std::forward_list` | `std::list`   |
+
+Doubly linked lists are usually **simpler** and require "only" double the space at most.
+Therefore their use is more widespread.
+
+
+### List Items
+
+```default
+Class Item of T :=
+    e: T
+    next: *Item //Pointer to Item
+    prev: *Item //Pointer to Item
+    invariant next->prev = this = prev->next
+```
+
+![](./imgs/d-list.png)
+
+**Problem**: 
+* predeccessor of first list element?
+* successor of last list element?
+
+**Solution**: Dummy Item with an empty data field as follows:
+
+![](./imgs/d-list-dummy.png)
+
+Advatanges of this solution:
+
+* **Invariant** is always satisfied
+* Exceptions are avoided, thus making the coding more:
+  * simple
+  * readable
+  * faster
+  * elegant
+  
+Disadvantages: a little more storage space.
+
+### The List Class
+
+```default
+Class List of T :=
+    dummy := (
+        Null : T
+        &dummy : *T // initially list is empty, therefore next points to the dummy itself
+        &dummy : *T // initially list is empty, therefore prev points to the dummy itself
+    ) : Item
+
+    // returns the address of the dummy, which represents the head of the list
+    Function head() : *Item :=
+        return address of dummy
+    
+    // simple access functions
+    // returns true iff list empty
+    Function is_empty() : Bool := 
+        return dummy.next == dummy 
+
+    // returns pointer to first Item of the list, given list is not empty
+    Function first() : *Item :=
+        assert (not is_empty())
+        return dummy.next
+    
+    // returns pointer to last Item of the list, given list is not empty
+    Function last() : *Item :=
+        assert (not is_empty())
+        return dummy.last
+
+    /* Splice is an all-purpose tool to cut out parts from a list
+       Cut out (a, ... b) form this list and insert after t */
+    Procedure splice(a, b, t : *Item) := 
+        assert (
+            b is not before a 
+            and 
+            t not between a and b
+        )
+        // Cut out (a, ... , b)
+        a->prev->next := b->next
+        b->next->prev := a->prev
+
+        // insert (a, ... b) after t
+        t->next->prev := b
+        b->next := t->next
+        t->next := a
+        a->prev := t
+```
+
+* Dlist cut-out $(a,...,b)$:
+
+ ![](./imgs/d-list-cut-out.png "Title: dList cut-out $(a,...,b)$"){fig-alt="dList cut-out (a...b)" width=70%}
+
+* Dlist insert $(a,...,b)$ after $t$: 
+
+![](./imgs/d-list-insert.png "Title: dList insert $(a,...,b)$ after $t$"){fig-alt="dList insert (a,...,b) after t" width=70%}
+
+
+
+
+
+
