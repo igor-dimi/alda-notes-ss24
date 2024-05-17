@@ -13,8 +13,9 @@ book:
     - part: "Data Structures"
       chapters:
         - 03/01-lists.qmd
+        - 03/02-arrays.qmd
 
-  downloads: pdf
+  # downloads: pdf
 
 bibliography: references.bib
 
