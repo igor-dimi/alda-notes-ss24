@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Algorithms &amp; Data Structures Notes - SoSe 24 - 1&nbsp; Program Run-time Analysis</title>
+<title>Algorithms &amp; Data Structures Notes - SoSe 24 - 3&nbsp; Arrays</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../03/01-lists.html" rel="next">
-<link href="../index.html" rel="prev">
+<link href="../03/01-lists.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html">Introduction</a></li><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../03/01-lists.html">Data Structures</a></li><li class="breadcrumb-item"><a href="../03/02-arrays.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Arrays</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -155,7 +188,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02-intro/02-analysis.html" class="sidebar-item-text sidebar-link active">
+  <a href="../02-intro/02-analysis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></span></a>
   </div>
 </li>
@@ -178,7 +211,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../03/02-arrays.html" class="sidebar-item-text sidebar-link">
+  <a href="../03/02-arrays.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Arrays</span></span></a>
   </div>
 </li>
@@ -194,17 +227,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reccurence-relations" id="toc-reccurence-relations" class="nav-link active" data-scroll-target="#reccurence-relations"><span class="header-section-number">1.1</span> Reccurence Relations</a></li>
-  <li><a href="#amortized-analysis" id="toc-amortized-analysis" class="nav-link" data-scroll-target="#amortized-analysis"><span class="header-section-number">1.2</span> Amortized Analysis</a></li>
+  <li><a href="#bounded-arrays" id="toc-bounded-arrays" class="nav-link active" data-scroll-target="#bounded-arrays"><span class="header-section-number">3.1</span> Bounded Arrays</a></li>
+  <li><a href="#unbounded-arrays" id="toc-unbounded-arrays" class="nav-link" data-scroll-target="#unbounded-arrays"><span class="header-section-number">3.2</span> Unbounded Arrays</a>
+  <ul class="collapse">
+  <li><a href="#memory-management" id="toc-memory-management" class="nav-link" data-scroll-target="#memory-management">Memory Management</a></li>
+  <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html">Introduction</a></li><li class="breadcrumb-item"><a href="../02-intro/02-analysis.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../03/01-lists.html">Data Structures</a></li><li class="breadcrumb-item"><a href="../03/02-arrays.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Arrays</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Program Run-time Analysis</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Arrays</span></h1>
 </div>
 
 
@@ -221,53 +258,100 @@ window.Quarto = {
 </header>
 
 
-<section id="reccurence-relations" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="reccurence-relations"><span class="header-section-number">1.1</span> Reccurence Relations</h2>
-<p>Consider a very simple reccurence relation:</p>
-<p><span class="math display">\[
-    T(n) :=
-    \begin{cases}
-        1               &amp; n = 1 \\
-        n + T(n - 1),   &amp; n &gt; 1
-    \end{cases}
-\]</span></p>
-<p>With <strong>mathematical induction</strong> we can formally show that <span class="math inline">\(T(n)\)</span> is quadratic. But there is a simpler &amp; more intuitive way:</p>
-<p><span class="math display">\[\begin{align*}
-    T(n) &amp;= n + T(n - 1)            \tag{Def $T(\cdot)$} \\
-         &amp;= n + n - 1 + T(n - 2)  \\
-         &amp;= \dots \tag{Repeat $n - 2$ times}\\
-         &amp;= n + n - 1 + \dots + T(1) \\
-         &amp;= n + n - 1 + \dots + 1 \tag{Def $T(1)$} \\
-         &amp;= \frac{n(n + 1)}{2} \tag{Gauss}\\
-         &amp;\in \mathcal{O}(n^2)
-\end{align*}\]</span></p>
-<p>This method can be applied to the more complex divide-and-conquer reccurence relation from the lecture:</p>
-<p><span class="math display">\[
-    R(n) :=
-    \begin{cases}
-        a, &amp;n = 1 \\
-        c\dot n + d\cdot R(\frac{n}{b}), &amp;n &gt; 1
-    \end{cases}
-\]</span></p>
-<p>Applying the above method we expand <span class="math inline">\(R(\cdot)\)</span> repetitively according to its definition until we reach the base case, rearranging terms when necessary:</p>
-<p><span class="math display">\[\begin{align*}
-    R(n) &amp;= c\cdot n + d\cdot R(\frac{n}{b}) \tag{Def $R(\cdot)$} \\
-         &amp;= c\cdot n + d\bigl(c\frac{n}{b} + d\cdot R(\frac{n}{b^2})\bigr)  \\
-         &amp;= c\cdot n + d\Bigl(c\frac{n}{b} + d\cdot \bigl(c\cdot \frac{n}{b^2} + d\cdot R(\frac{n}{b^2})\bigr)\Bigr)  \\
-         &amp;= c\cdot n + d\cdot c\frac{n}{b} + d^2c\frac{n}{b^2} + d^3\cdot R(\frac{n}{b^3}) \tag{Rearrange} \\
-         &amp;= c\cdot n \left(1 + \frac{d}{b} + \frac{d^2}{b^2}\right) + d^3\cdot R(\frac{n}{b^3}) \\
-         &amp;= \dots \tag{Repeat $k$-times} \\
-         &amp;= c\cdot n\left(1 + \frac{d}{b} + \dots + \frac{d^{k - 1}}{b^{k - 1}}\right) + d^k \cdot R(\frac{n}{b^k}) \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(\frac{n}{b^k}) \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + d^k \cdot R(1) \tag{Ass $\frac{n}{b^k} = 1$} \\
-         &amp;= c\cdot n \sum_{i = 0}^{k - 1}\left(\frac{d}{b}\right)^i + a\cdot d^k \tag{Def $R(1)$}
-\end{align*}\]</span></p>
-<p>See lecture slides for the complexity analysis of final expression.</p>
+<p>An array is a contigious sequence of memory cells.</p>
+<section id="bounded-arrays" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="bounded-arrays"><span class="header-section-number">3.1</span> Bounded Arrays</h2>
+<p>Bounded arrays have fixed size and are an efficient data structure.</p>
+<ul>
+<li>Size must be known during compile time and is fixed.</li>
+<li>Its memory location in the stack allows many compiler optimizations.</li>
+</ul>
 </section>
-<section id="amortized-analysis" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="amortized-analysis"><span class="header-section-number">1.2</span> Amortized Analysis</h2>
+<section id="unbounded-arrays" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="unbounded-arrays"><span class="header-section-number">3.2</span> Unbounded Arrays</h2>
+<p>The size of an <strong>unbounded array</strong> can dynamically change during run-time. From the user POV it provides the same behaviour as a linked list.</p>
+<p>It allows the operations:</p>
+<ul>
+<li><code>pushBack(e: T)</code>: insert an element at the end of the array</li>
+<li><code>popBack(e: T)</code>: remove an element at the end of the array</li>
+</ul>
+<section id="memory-management" class="level3">
+<h3 class="anchored" data-anchor-id="memory-management">Memory Management</h3>
+<ul>
+<li><p><code>allocate(n)</code>: request a <span class="math inline">\(n\)</span> contigious blocks of memory words and returns the address value of the first block. This we have the memory blocks:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./imgs/array-memory-alloc.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>array memory allocation</figcaption>
+</figure>
+</div>
+<p>where <code>ptr + i</code> addresses are determined by pointer arithmetic.</p></li>
+<li><p><code>dispose(ptr)</code> marks the memory address value held in <code>ptr</code> as free, effectively deleting the object held there.</p></li>
+</ul>
+<p>In general, the allocated memory can’t grow dynamically during life time, since the immediate memory block after the last one might get unpredictably occupied <span class="math inline">\(\Rightarrow\)</span> If we need a new memory block of size <span class="math inline">\(n' &gt; n\)</span>, we must allocate a new block, copy the old block contents, and finally free it.</p>
+</section>
+<section id="implementation" class="level3">
+<h3 class="anchored" data-anchor-id="implementation">Implementation</h3>
+<p>First we consider a slow variant:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Class UArraySlow&lt;T&gt;:=</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  c := 0 : Nat // capacity</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  b : Array[0..c-1]&lt;T&gt; // the array itself</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  pushBack(el : T) : void :=</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    // c++</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    // allocate new array on heap with new capacity</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    // copy elements over from the old array</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    // insert el at the last location</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  popBack() : void := </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    // analagous</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Problem</strong>: <span class="math inline">\(n\)</span> <code>pushBack</code> operations require <span class="math inline">\(1 + \dots + n \in \mathcal{O}(n^2)\)</span> time <span class="math inline">\(\Rightarrow\)</span> slow.</p>
+<p>Solution:</p>
+<section id="unbounded-arrays-with-extra-memory" class="level4">
+<h4 class="anchored" data-anchor-id="unbounded-arrays-with-extra-memory">Unbounded Arrays with Extra Memory</h4>
+<p><strong>Idea</strong>: Request more memory than initial capacity. Reallocate memory only when array gets full or too empty:</p>
+<p><strong>Algorithm design principle</strong>: make common case fast.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Class UArray&lt;T&gt; := </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  c := 1 : Nat // capacity</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  n := 0 : Nat // number of elements in the array</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  //invariant n &lt;= c &lt; k*n || (n == 0 &amp;&amp; c &lt; 2)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  b : Array[0..c-1]&lt;T&gt;</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  // Array access</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  Operator [i : Nat] : T := </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    assert(0 &lt;= i &lt; n)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    return b[i]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  // accessor method for n</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  Function size() : Nat := return n</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  Procedure pushBack(e : T) := </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    if n == c :</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      reallocate(2*n) // see definition below</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    b[n] := e</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    n++</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  // reallocates a new memory with a given capacity c_new</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  Procedure reallocate(c_new : Nat) := </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    c := c_new </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    b_new := new Array[0..c_new - 1]&lt;T&gt;</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    //copy elements over to new array</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    for (i = 1 to n - 1) :</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>      b_new[i] := b[i]</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    dispose(b)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    b := b_new </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  Procedure popBack() :=</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    // don't do anything for empty arrays</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    assert n &gt; 0</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    n--</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    if 4*n &lt;= c &amp;&amp; n &gt; 0 :</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>      reallocate(2*n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -682,14 +766,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="../03/01-lists.html" class="pagination-link" aria-label="Lists">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lists</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../03/01-lists.html" class="pagination-link" aria-label="Lists">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Lists</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
