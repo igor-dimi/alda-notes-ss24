@@ -34,7 +34,7 @@ Therefore their use is more widespread.
 
 ```default
 Class Item of T :=
-    e: T
+    e: T //Data item of type T
     next: *Item //Pointer to Item
     prev: *Item //Pointer to Item
     invariant next->prev = this = prev->next
@@ -88,7 +88,7 @@ Class List of T :=
     // returns pointer to last Item of the list, given list is not empty
     Function last() : *Item :=
         assert (not is_empty())
-        return dummy.last
+        return dummy.prev
 
     /* Splice is an all-purpose tool to cut out parts from a list
        Cut out (a, ... b) form this list and insert after t */
@@ -107,18 +107,156 @@ Class List of T :=
         b->next := t->next
         t->next := a
         a->prev := t
+
+    
+    // Moving items by utilising splice
+    //Move item a after item b
+    Procedure move_after(a, b: *Item) := 
+        splice(a, a, b)
+    
+    // Move item a to the front of the list
+    Procedure move_to_front(a: *Item) := 
+        move_after(a, dummy)
+
+    Procedure move_to_back(a: *Item) :=
+        move_after(b, last())
+
+    // Deleting items by moving them to a global freeList
+    // remove item a
+    Procedure remove(a: *Item) :=
+        move_after(b, freeList.dummy)
+    
+    // remove first item
+    Procedure pop_front() :=
+        remove(first())
+
+    //remove last item
+    Procedure pop_back() :=
+        remove(last())
+
+    // Inserting Elements
+    // Insert an item with value x after item a
+    Function insert_after(x : T, a : *Item) : *Item := 
+        checkFreeList() //make sure freeList is non empty
+        b := freeList.first() // obtain an item b to hold x
+        move_after(b, a) // insert b after a
+        b->e := x // set the data item value of b to x
+        return b
+
+    // Manipulating whole lists
+    Procedure concat(L : List) :=
+        splice(L.first(), L.last(), last()) //move whole of L after last element of this list
+
+    Procedure clear()
+        freeList.concat(this) //after this operation from from first to last element of this
+                              // list are concatenated to the freeList, leaving only the 
+                              // dummy element in this list.
+
+    Fuction get(i )
+
+    
+
+    
 ```
 
-* Dlist cut-out $(a,...,b)$:
+#### Splicing 
 
- ![](./imgs/d-list-cut-out.png "Title: dList cut-out $(a,...,b)$"){fig-alt="dList cut-out (a...b)" width=70%}
+The code for splicing of the `List` class:
 
-* Dlist insert $(a,...,b)$ after $t$: 
+```default
+/* Splice is an all-purpose tool to cut out parts from a list
+    Cut out (a, ... b) form this list and insert after t */
+Procedure splice(a, b, t : *Item) := 
+    assert (
+        b is not before a 
+        and 
+        t not between a and b
+    )
+    // Cut out (a, ... , b)
+    a->prev->next := b->next
+    b->next->prev := a->prev
 
-![](./imgs/d-list-insert.png "Title: dList insert $(a,...,b)$ after $t$"){fig-alt="dList insert (a,...,b) after t" width=70%}
+    // insert (a, ... b) after t
+    t->next->prev := b
+    b->next := t->next
+    t->next := a
+    a->prev := t
+```
 
+* Dlist cut-out $(a,...,b)$ (see @fig-cutout):
 
+ ![cutout](./imgs/d-list-cut-out.png "Title: dList cut-out $(a,...,b)$" ){#fig-cutout fig-alt="dList cut-out (a...b)" width=70%}
 
+* Dlist insert $(a,...,b)$ after $t$ (see @fig-insert): 
 
+![insert](./imgs/d-list-insert.png "Title: dList insert $(a,...,b)$ after $t$"){#fig-insert fig-alt="dList insert (a,...,b) after t" width=70%}
 
+#### Speicherverwaltung ./.FreeList
 
+Methods (?):
+
+* Niavely: allocate memory for each new element, deallocate memory after deleting each element:
+  * advantage: simplicity
+  * disadvantage: requires a good implementation of memory management: potentially very slow
+* "global" `freeList` (e.g. `static` member in C++)
+  * doubly linked list of all not used elements
+  * transfer 'deleted' elements in `freeList`.
+  * `checkFreeList` allocates, in case the list is empty
+
+Real implementations:
+* naiv but with well implemented, efficient memory management
+* refined Free List Approach (class-agnostic, release)
+* implementation-specific.
+
+#### Deleting Elements
+
+Deleting elements realised by moving them to the global `freeList`:
+
+```default
+Procedure remove(a: *Item) :=
+    move_after(a, freeList.dummy) // item a is now a 'free' item. 
+
+Procedure pop_front() :=
+    remove(first())
+
+Procedure pop_back() :=
+    remove(last())
+```
+
+#### Inserting Elements
+
+Inserting elements into a list $l$ also utilizes `freeList`, by fetching its first element
+an moving it into $l$. 
+
+```default
+Function insert_after(x : T, a : *Item) : *Item := 
+    checkFreeList() //make sure freeList is non empty
+    b := freeList.first() // obtain an item b to hold x
+    move_after(b, a) // insert b after a
+    b->e := x // set the data item value of b to x
+    return b
+
+Function insert_before(x : T, b : *Item) : *Item :=
+    return insert_after(x, b->prev)
+
+Procedure push_front(x : T) :=
+    insert_after(x, dummy)
+
+Procedure push_back(x : T) :=
+    insert_after(x, last())
+```
+
+#### Manipulating whole Lists
+
+```default
+// Manipulating whole lists
+Procedure concat(L : List) :=
+    splice(L.first(), L.last(), last()) //move whole of L after last element of this list
+
+Procedure clear()
+    freeList.concat(this) //after this operation from from first to last element of this
+                            // list are concatenated to the freeList, leaving only the 
+                            // dummy element in this list.
+```
+
+This operations require **constant time** - indeendent of the list size!
