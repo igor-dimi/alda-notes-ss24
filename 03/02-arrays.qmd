@@ -1,0 +1,33 @@
+---
+title: Arrays
+---
+
+An array is a contigious sequence of memory cells. 
+
+## Bounded Arrays 
+
+Bounded arrays have fixed size and are an efficient
+data structure.
+
+* Size must be known during compile time and is fixed. 
+* Its memory location in the stack allows many compiler
+  optimizations.
+
+## Unbounded Arrays
+
+The size of an **unbounded array** can dynamically change
+during run-time. From the user POV it provides the same
+behaviour as a linked list. 
+
+It allows the operations:
+
+* `pushBack(e: T)`: insert an element at the end of the array
+* `popBack(e: T)`: remove an element at the end of the array
+
+### Memory Management
+
+* `allocate(n)`: request a $n$ contigious blocks of memory
+  words and returns the address value of the first block.
+  This we have the memory blocks:
+
+
