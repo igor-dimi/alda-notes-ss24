@@ -54,3 +54,6 @@ the base case, rearranging terms when necessary:
 \end{align*}
 
 See lecture slides for the complexity analysis of final expression. 
+
+## Amortized Analysis 
+
