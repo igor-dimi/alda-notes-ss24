@@ -13,13 +13,11 @@ book:
     - part: "Data Structures"
       chapters:
         - 03/01-lists.qmd
-<<<<<<< HEAD
         - 03/02-arrays.qmd
 
-  # downloads: pdf
-=======
   downloads: pdf
->>>>>>> 96249d35711d4da51216c97d6753ca03cac18f41
+
+number-depth: 2
 
 bibliography: references.bib
 

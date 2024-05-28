@@ -55,5 +55,5 @@ the base case, rearranging terms when necessary:
 
 See lecture slides for the complexity analysis of final expression. 
 
-## Amortized Analysis 
 
+## Amortized Analysis
