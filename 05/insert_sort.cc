@@ -2,8 +2,9 @@
 void print_arr(int* arr, int N)
 {
     int i = 0;
-    while (i++ < N - 1) {
+    while (i < N - 1) {
         std::cout << arr[i] << " ";
+        i++;
     } // i == N - 1
     std::cout << arr[i] << std::endl;
 }
