@@ -21,11 +21,22 @@
     ]
   },
   {
+    "objectID": "02-intro/02-analysis.html#master-theorem",
+    "href": "02-intro/02-analysis.html#master-theorem",
+    "title": "1  Program Run-time Analysis",
+    "section": "1.2 Master Theorem",
+    "text": "1.2 Master Theorem\nFor reccurence relations of the form:\n\\[\n    T(n) :=\n    \\begin{cases}\n        a, &n = 1 \\\\\n        b\\cdot n + c\\cdot T(\\frac{n}{d}), &n &gt; 1\n    \\end{cases}\n\\]\nMaster theorem gives the solutions:\n\\[\n    T(n) =\n    \\begin{cases}\n        \\Theta(n), &c &lt; d \\\\\n        \\Theta(n\\log(n)), &c = d \\\\\n        \\Theta(n^{\\log_b(d)}), &c &gt; d \\\\\n    \\end{cases}\n\\]\nExample: Merge Sort.\nComplexity of merge sort satisfies the reccurence relation:\n\\[\\begin{align*}\n&T(1) = 1 \\\\\n&T(n) = \\mathcal{O}(n) + 2\\cdot T(\\frac{n}{2})\n\\end{align*}\\]\nThus with \\(c = 2 = d\\) the second case of MT applies: \\(T(n) = \\Theta(n\\log n)\\)",
+    "crumbs": [
+      "Introduction",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Program Run-time Analysis</span>"
+    ]
+  },
+  {
     "objectID": "02-intro/02-analysis.html#amortized-analysis",
     "href": "02-intro/02-analysis.html#amortized-analysis",
     "title": "1  Program Run-time Analysis",
-    "section": "1.2 Amortized Analysis",
-    "text": "1.2 Amortized Analysis",
+    "section": "1.3 Amortized Analysis",
+    "text": "1.3 Amortized Analysis",
     "crumbs": [
       "Introduction",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Program Run-time Analysis</span>"
@@ -106,6 +117,39 @@
     "crumbs": [
       "Data Structures",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Arrays</span>"
+    ]
+  },
+  {
+    "objectID": "05/01-sorting.html",
+    "href": "05/01-sorting.html",
+    "title": "4  Sorting and Priority Queues",
+    "section": "",
+    "text": "4.1 Sorting Algorithms",
+    "crumbs": [
+      "Data Structures",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sorting and Priority Queues</span>"
+    ]
+  },
+  {
+    "objectID": "05/01-sorting.html#sorting-algorithms",
+    "href": "05/01-sorting.html#sorting-algorithms",
+    "title": "4  Sorting and Priority Queues",
+    "section": "",
+    "text": "Insertion Sort\n\ndef insertion_sort(a) :\n    n = len(a)\n    # i = 1\n    # sorted a[0..i-1]\n    for i in range(1, n) :\n        # insert i in the right position\n        j = i - 1\n        el = a[i]\n        while el &lt; a[j] and j &gt; 0 :\n            a[j + 1] = a[j]\n            j = j - 1\n        # el &gt;= a[j] or j == 0\n        if el &lt; a[j] : # j == 0\n            a[1] = a[0]\n            a[0] = el\n        else : # el &gt;= a[j] \n            a[j + 1] = el\n    return a\n\ntesting insertion sort for some inputs:\n\nimport numpy as np\nfor i in range (2, 8) :\n    randarr = np.random.randint(1, 20, i)\n    print(\"in:  \", randarr)\n    print(\"out: \", insertion_sort(randarr))\n\nin:   [14  5]\nout:  [ 5 14]\nin:   [11 19 12]\nout:  [11 12 19]\nin:   [11 16 10 17]\nout:  [10 11 16 17]\nin:   [ 3  3 18 15  2]\nout:  [ 2  3  3 15 18]\nin:   [18 13 11 17  4 19]\nout:  [ 4 11 13 17 18 19]\nin:   [12  9  6 16 17 15 13]\nout:  [ 6  9 12 13 15 16 17]\n\n\nFollowing illustrates the state after each insertion (ith iteration):\n\ndef insertion_sort_print(a) :\n    n = len(a)\n    # i = 1\n    # sorted a[0..i-1]\n    for i in range(1, n) :\n        # insert i in the right position\n        j = i - 1\n        el = a[i]\n        while el &lt; a[j] and j &gt; 0 :\n            a[j + 1] = a[j]\n            j = j - 1\n        # el &gt;= a[j] or j == 0\n        if el &lt; a[j] : # j == 0\n            a[1] = a[0]\n            a[0] = el\n        else : # el &gt;= a[j] \n            a[j + 1] = el\n        print(\"after insertion \", i, \": \", a)\n    # return a\n\n\na = np.random.randint(-20, 20, 8)\nprint(\"input:               \", a)\ninsertion_sort_print(a)\n\ninput:                [-15  -5  -6   4 -18  14   1 -20]\nafter insertion  1 :  [-15  -5  -6   4 -18  14   1 -20]\nafter insertion  2 :  [-15  -6  -5   4 -18  14   1 -20]\nafter insertion  3 :  [-15  -6  -5   4 -18  14   1 -20]\nafter insertion  4 :  [-18 -15  -6  -5   4  14   1 -20]\nafter insertion  5 :  [-18 -15  -6  -5   4  14   1 -20]\nafter insertion  6 :  [-18 -15  -6  -5   1   4  14 -20]\nafter insertion  7 :  [-20 -18 -15  -6  -5   1   4  14]\n\n\n\n\nSelection Sort\n\n\nBubble Sort\n\n\nMerge Sort\nGiven by the following python implementation:\n\ndef merge(a, b) :\n    # assert: a and b are sorted\n    c = []\n    n1 = len(a)\n    n2 = len(b)\n    k1 = 0\n    k2 = 0\n    i = 0\n    # invariant: merged a[0..k1 - 1] with b[0..k2 - 2]\n    while k1 &lt; n1 and k2 &lt; n2 :\n        if a[k1] &lt;= b[k2] :\n            c.append(a[k1])\n            k1 = k1 + 1\n        else :\n            c.append(b[k2])\n            k2 = k2 + 1\n    # k1 &gt;= n1 or k2 &gt;= n2\n    if k1 == n1 :\n        while k2 &lt; n2 :\n            c.append(b[k2])\n            k2 = k2 + 1\n    if k2 == n2 :\n        while k1 &lt; n1 :\n            c.append(a[k1])\n            k1 = k1 + 1\n    return c\n        \ndef merge_sort(a) :\n    if len(a) == 1 : return a[0:1]\n    n = len(a)\n    a1 = a[0 : n // 2]\n    a2 = a[n // 2 : ]\n    return  merge(merge_sort(a1), merge_sort(a2))\n\nWe test on some arrays:\n\nfor i in range (2, 8) :\n    randarr = np.random.randint(-20, 20, i)\n    print(\"in:  \", randarr)\n    print(\"out: \", merge_sort(randarr))\n\nin:   [-14  14]\nout:  [-14, 14]\nin:   [ -2 -17  16]\nout:  [-17, -2, 16]\nin:   [12 19 -7 14]\nout:  [-7, 12, 14, 19]\nin:   [-4  0 16 12 14]\nout:  [-4, 0, 12, 14, 16]\nin:   [ 19   8   8  18 -16  -4]\nout:  [-16, -4, 8, 8, 18, 19]\nin:   [-20  17  15   8  -1 -10  -8]\nout:  [-20, -10, -8, -1, 8, 15, 17]\n\n\n\n\nQuick Sort\nNaively:\n\ndef quicksort(s) :\n    if len(s) &lt;= 1 : return s\n    p = s[len(s) // 2]\n    a = []\n    b = []\n    c = []\n    for i in range(0, len(s)) :\n        if s[i] &lt; p : a.append(s[i])\n    for i in range(0, len(s)) :\n        if s[i] == p : b.append(s[i])\n    for i in range(0, len(s)) :\n        if s[i] &gt; p : c.append(s[i])\n    return quicksort(a) + b + quicksort(c)\n\ntesting this naive implementation for some arrays:\n\nfor i in range (2, 8) :\n    randarr = np.random.randint(-10, 20, i)\n    print(\"in:  \", randarr)\n    print(\"out: \", quicksort(randarr))\n\nin:   [ 3 -2]\nout:  [-2, 3]\nin:   [-9 17  5]\nout:  [-9, 5, 17]\nin:   [14 19 -5 -7]\nout:  [-7, -5, 14, 19]\nin:   [ 8 13 19 10 -3]\nout:  [-3, 8, 10, 13, 19]\nin:   [11 17 -9 13 -9 18]\nout:  [-9, -9, 11, 13, 17, 18]\nin:   [16  5  0  7 -2  7 -4]\nout:  [-4, -2, 0, 5, 7, 7, 16]",
+    "crumbs": [
+      "Data Structures",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sorting and Priority Queues</span>"
+    ]
+  },
+  {
+    "objectID": "05/01-sorting.html#priority-queues-and-heap-data-structure",
+    "href": "05/01-sorting.html#priority-queues-and-heap-data-structure",
+    "title": "4  Sorting and Priority Queues",
+    "section": "4.2 Priority Queues and Heap Data Structure",
+    "text": "4.2 Priority Queues and Heap Data Structure\nA set \\(M\\) of Elements \\(e : T\\) with Keys supporting two operations:\n\ninsert(e): Insert \\(e\\) into \\(M\\).\ndelete_min(): remove the min element from \\(M\\) and return it.\n\n\nApplications\n\nGreedy algorithms (selecting the optimal local optimal solution)\nSimulation of discrete events\nbranch-and-bound search\ntime forward processing.\n\n\n\nBinary Heaps\nHeap Property:\n\nFor any leaf \\(a \\in M\\) \\(a\\) is a heap.\nLet \\(T_1,\\, T_2\\) be heaps. If \\(a \\leq x, \\, \\forall x\\in T_1, T_2\\), then \\(T_1 \\circ a \\circ T_2\\) is also a heap.\n\nComplete Binary Tree:\n\nA complete binary tree is a binary tree in which ever lebel, except possibly the last, is completely filled, and all nodes in the last level are as far left as possible.\n\nHeap:\n\nA heap is a complete binary tree that satisfies the heap property:\nA heap can be succinctly represented as an array:\n\n\n\n\nheap\n\n\n\nArray h[1..n]\nfor any given node with the number j:\n\nleft child: 2*j\nright child 2*j + 1\nparent: bottom(j/2)\n\n\nPseudocode:\nClass BinaryHeapPQ(capacity: Nat)&lt;T&gt; :=\n    h : Array[1..capacity]&lt;T&gt;\n    size := 0 : Nat // current amount of elements\n\n    // Heap-property\n    // invariant: h[bottom(j/2) &lt;= h(j)], for all j == 2..n\n\n    Function min() :=\n        assert size &gt; 0 // heap non-emtpy\n        return h[1]\n    \n    Procedure insert(e : T) :=\n        assert size &lt; capacity\n        size++\n        h[n] := e\n        siftUp(n)\n    \n    Procedure siftUp(i : Nat) := \n        // assert Heap-property violated at most at position i\n        if i == 1 or h[bottom(i / 2)] &lt;= h[i] then return\n        swap(h[i], h[bottom(i/2)])\n        siftUp(bottom(i/2))\n    \n    Procedure popMin : T :=\n        result = h[1] : T\n        h[1] := h[n]\n        n--\n        siftDown(1)\n        return result\n    \n    Procedure siftDown (i : Nat) :=\n        // assert: Heap property is at most at position 2*i or 2*i + 1 violated\n        if 2i &gt; n then return // i is a leaf\n\n        // select the appropriate child\n        if 2*i + 1 &gt; n or h[2*i] &lt;= h[2*i + 1] : \n        //no right child exists or left child is smaller than right\n            m := 2*i\n        else : m := 2*i + 1\n        siftDown(m)\n\n    Procedure buildHeap(a[1..n]&lt;T&gt;) :=\n        h := a\n        buildRecursive(1)\n\n    Procedure buildHeapRecursive(i : Nat) :=\n        if 4*i &lt;= n : // children are not leaves\n            buildHeapRecursive(2*i) // assert: heap property holds for left subtree\n            buildHeaprecursive(2*i + 1) // assert: heap property holds for right subtree\n        siftDown(i) //assert Heap property holds for subtree starting at i \n    \n    //alternatively\n    Procudure buildHeapBackwards :=\n        for i := n/2 downto 1 :\n            siftDown(i)\n\n    Procedure heapSort(a[1..n]&lt;T&gt;) :=\n        buildHeap(a) // O(n)\n        for i := n downto 2 do : \n            h[i] := deleteMin(); // O(log(n))\n\nHeap Insert\nProcedure insert(e : T) :=\n    assert size &lt; capacity\n    size++\n    h[n] := e\n    siftUp(n)\n\nProcedure siftUp(i : Nat) := \n    // assert Heap-property violated at most at position i\n    if i == 1 or h[bottom(i / 2)] &lt;= h[i] then return\n    swap(h[i], h[bottom(i/2)])\n    siftUp(bottom(i/2))\nIllustration of heap insert:\n\n\n\nheap insert\n\n\n\n\nHeap Pop Min (or Delete Min)\n Procedure popMin : T :=\n        result = h[1] : T\n        h[1] := h[n]\n        n--\n        siftDown(1)\n        return result\n    \nProcedure siftDown (i : Nat)\n    // assert: Heap property is at most at position 2*i or 2*i + 1 violated\n    if 2i &gt; n then return // i is a leaf\n\n    // select the appropriate child\n    if 2*i + 1 &gt; n or h[2*i] &lt;= h[2*i + 1] : \n    //no right child exists or left child is smaller than right\n        m := 2*i\n    else : m := 2*i + 1\n    siftDown(m)\nIllustration of pop min:\n\n\n\nheap pop min\n\n\n\n\nConstruction of a Binary Heap\n\nGiven are \\(n\\) numbers. Construct a heap from these numbers\nNaive Solution: \\(n\\) calls to insert() \\(\\Rightarrow\\) \\(\\mathcal{O}(n\\log(n))\\)\n\nProblem: If numbers are given in an array, we can’t perform the construction in place.\nIt is slow\n\nwe can do faster and in place in \\(\\mathcal{O}(n)\\) time.\n\nPseudocode for recursive implementation:\n Procedure buildHeap(a[1..n] : T) :=\n        h := a\n        buildRecursive(1)\n\nProcedure buildHeapRecursive(i : Nat) :=\n    if 4*i &lt;= n : // children are not leaves\n        buildHeapRecursive(2*i) // assert: heap property holds for left subtree\n        buildHeaprecursive(2*i + 1) // assert: heap property holds for right subtree\n    siftDown(i) //assert Heap property holds for subtree starting at i \nA simpler iterative one-liner:\n Procudure buildHeapBackwards :=\n        for i := n/2 downto 1 :\n            siftDown(i)\n\\(\\lfloor i/2 \\rfloor\\) is the last non-leaf node.\nTime complexity of these binary heap construction algorithms is \\(\\mathbfcal{O}(n)\\).\n\n\nHeapsort\nProcedure heapSort(a[1..n]&lt;T&gt;) :=\n        buildHeap(a) // O(n)\n        for i := n downto 2 do : \n            h[i] := deleteMin(); // O(log(n))\nSorts in decreasing order in \\(\\mathcal{O}(n\\log(n))\\), by removing the minimal element and writing the return value to the end of the array in place.",
+    "crumbs": [
+      "Data Structures",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Sorting and Priority Queues</span>"
     ]
   }
 ]
