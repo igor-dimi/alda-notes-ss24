@@ -1,0 +1,348 @@
+---
+title: "Sorting and Priority Queues"
+---
+
+## Sorting Algorithms
+
+### Insertion Sort
+
+```{python}
+def insertion_sort(a) :
+    n = len(a)
+    # i = 1
+    # sorted a[0..i-1]
+    for i in range(1, n) :
+        # insert i in the right position
+        j = i - 1
+        el = a[i]
+        while el < a[j] and j > 0 :
+            a[j + 1] = a[j]
+            j = j - 1
+        # el >= a[j] or j == 0
+        if el < a[j] : # j == 0
+            a[1] = a[0]
+            a[0] = el
+        else : # el >= a[j] 
+            a[j + 1] = el
+    return a
+```
+
+testing insertion sort for some inputs:
+
+```{python}
+import numpy as np
+for i in range (2, 8) :
+    randarr = np.random.randint(1, 20, i)
+    print("in:  ", randarr)
+    print("out: ", insertion_sort(randarr))
+```
+
+Following illustrates the state after each insertion (ith iteration):
+
+```{python}
+def insertion_sort_print(a) :
+    n = len(a)
+    # i = 1
+    # sorted a[0..i-1]
+    for i in range(1, n) :
+        # insert i in the right position
+        j = i - 1
+        el = a[i]
+        while el < a[j] and j > 0 :
+            a[j + 1] = a[j]
+            j = j - 1
+        # el >= a[j] or j == 0
+        if el < a[j] : # j == 0
+            a[1] = a[0]
+            a[0] = el
+        else : # el >= a[j] 
+            a[j + 1] = el
+        print("after insertion ", i, ": ", a)
+    # return a
+```
+
+```{python}
+a = np.random.randint(-20, 20, 8)
+print("input:               ", a)
+insertion_sort_print(a)
+```
+
+### Selection Sort
+
+### Bubble Sort
+
+### Merge Sort
+
+Given by the following python implementation:
+
+```{python}
+def merge(a, b) :
+    # assert: a and b are sorted
+    c = []
+    n1 = len(a)
+    n2 = len(b)
+    k1 = 0
+    k2 = 0
+    i = 0
+    # invariant: merged a[0..k1 - 1] with b[0..k2 - 2]
+    while k1 < n1 and k2 < n2 :
+        if a[k1] <= b[k2] :
+            c.append(a[k1])
+            k1 = k1 + 1
+        else :
+            c.append(b[k2])
+            k2 = k2 + 1
+    # k1 >= n1 or k2 >= n2
+    if k1 == n1 :
+        while k2 < n2 :
+            c.append(b[k2])
+            k2 = k2 + 1
+    if k2 == n2 :
+        while k1 < n1 :
+            c.append(a[k1])
+            k1 = k1 + 1
+    return c
+        
+def merge_sort(a) :
+    if len(a) == 1 : return a[0:1]
+    n = len(a)
+    a1 = a[0 : n // 2]
+    a2 = a[n // 2 : ]
+    return  merge(merge_sort(a1), merge_sort(a2))
+```
+
+We test on some arrays:
+
+```{python}
+for i in range (2, 8) :
+    randarr = np.random.randint(-20, 20, i)
+    print("in:  ", randarr)
+    print("out: ", merge_sort(randarr))
+```
+
+
+### Quick Sort
+
+Naively:
+```{python}
+def quicksort(s) :
+    if len(s) <= 1 : return s
+    p = s[len(s) // 2]
+    a = []
+    b = []
+    c = []
+    for i in range(0, len(s)) :
+        if s[i] < p : a.append(s[i])
+    for i in range(0, len(s)) :
+        if s[i] == p : b.append(s[i])
+    for i in range(0, len(s)) :
+        if s[i] > p : c.append(s[i])
+    return quicksort(a) + b + quicksort(c)
+```
+
+testing this naive implementation for some arrays:
+
+```{python}
+for i in range (2, 8) :
+    randarr = np.random.randint(-10, 20, i)
+    print("in:  ", randarr)
+    print("out: ", quicksort(randarr))
+```
+
+
+## Priority Queues and Heap Data Structure 
+
+A set $M$ of Elements $e : T$ with Keys supporting two operations:
+
+* `insert(e)`: Insert $e$ into $M$. 
+* `delete_min()`: remove the min element from $M$ and return it. 
+
+### Applications
+
+* Greedy algorithms (selecting the optimal local optimal solution)
+* Simulation of discrete events
+* branch-and-bound search
+* time forward processing.
+
+### Binary Heaps
+ 
+**Heap Property**:
+
+* For any leaf $a \in M$ $a$ is a heap.
+* Let $T_1,\, T_2$ be heaps. If $a \leq x, \, \forall x\in T_1, T_2$, then $T_1 \circ a \circ T_2$ is also a heap. 
+
+**Complete Binary Tree**:
+
+* A **complete** binary tree is a binary tree in which ever lebel, except possibly the last,
+  is completely filled, and all nodes in the last level are as far left as possible. 
+
+**Heap**:
+
+* A **heap** is a complete binary tree that satisfies the heap property:
+* A heap can be succinctly represented as an array: 
+
+![heap](imgs/heap-array-numbering.png)
+
+* Array `h[1..n]`
+* for any given node with the number `j`:
+  * left child: `2*j`
+  * right child `2*j + 1`
+  * parent: `bottom(j/2)`
+
+Pseudocode:
+
+```default
+Class BinaryHeapPQ(capacity: Nat)<T> :=
+    h : Array[1..capacity]<T>
+    size := 0 : Nat // current amount of elements
+
+    // Heap-property
+    // invariant: h[bottom(j/2) <= h(j)], for all j == 2..n
+
+    Function min() :=
+        assert size > 0 // heap non-emtpy
+        return h[1]
+    
+    Procedure insert(e : T) :=
+        assert size < capacity
+        size++
+        h[n] := e
+        siftUp(n)
+    
+    Procedure siftUp(i : Nat) := 
+        // assert Heap-property violated at most at position i
+        if i == 1 or h[bottom(i / 2)] <= h[i] then return
+        swap(h[i], h[bottom(i/2)])
+        siftUp(bottom(i/2))
+    
+    Procedure popMin : T :=
+        result = h[1] : T
+        h[1] := h[n]
+        n--
+        siftDown(1)
+        return result
+    
+    Procedure siftDown (i : Nat) :=
+        // assert: Heap property is at most at position 2*i or 2*i + 1 violated
+        if 2i > n then return // i is a leaf
+
+        // select the appropriate child
+        if 2*i + 1 > n or h[2*i] <= h[2*i + 1] : 
+        //no right child exists or left child is smaller than right
+            m := 2*i
+        else : m := 2*i + 1
+        siftDown(m)
+
+    Procedure buildHeap(a[1..n]<T>) :=
+        h := a
+        buildRecursive(1)
+
+    Procedure buildHeapRecursive(i : Nat) :=
+        if 4*i <= n : // children are not leaves
+            buildHeapRecursive(2*i) // assert: heap property holds for left subtree
+            buildHeaprecursive(2*i + 1) // assert: heap property holds for right subtree
+        siftDown(i) //assert Heap property holds for subtree starting at i 
+    
+    //alternatively
+    Procudure buildHeapBackwards :=
+        for i := n/2 downto 1 :
+            siftDown(i)
+
+    Procedure heapSort(a[1..n]<T>) :=
+        buildHeap(a) // O(n)
+        for i := n downto 2 do : 
+            h[i] := deleteMin(); // O(log(n))
+```
+
+#### Heap Insert
+
+```default
+Procedure insert(e : T) :=
+    assert size < capacity
+    size++
+    h[n] := e
+    siftUp(n)
+
+Procedure siftUp(i : Nat) := 
+    // assert Heap-property violated at most at position i
+    if i == 1 or h[bottom(i / 2)] <= h[i] then return
+    swap(h[i], h[bottom(i/2)])
+    siftUp(bottom(i/2))
+```
+
+Illustration of heap insert:
+
+![heap insert](imgs/insert-heap.png)
+
+#### Heap Pop Min (or Delete Min)
+
+```default
+ Procedure popMin : T :=
+        result = h[1] : T
+        h[1] := h[n]
+        n--
+        siftDown(1)
+        return result
+    
+Procedure siftDown (i : Nat)
+    // assert: Heap property is at most at position 2*i or 2*i + 1 violated
+    if 2i > n then return // i is a leaf
+
+    // select the appropriate child
+    if 2*i + 1 > n or h[2*i] <= h[2*i + 1] : 
+    //no right child exists or left child is smaller than right
+        m := 2*i
+    else : m := 2*i + 1
+    siftDown(m)
+```
+
+Illustration of pop min:
+
+![heap pop min](imgs/popMin-heap.png){width="110%"}
+
+#### Construction of a Binary Heap
+
+* Given are $n$ numbers. Construct a heap from these numbers
+* **Naive Solution**: $n$ calls to `insert()` $\Rightarrow$ $\mathcal{O}(n\log(n))$
+    * Problem: If numbers are given in an array, we can't perform the construction in place.
+    * It is slow
+* we can do faster and in place in $\mathcal{O}(n)$ time. 
+
+Pseudocode for recursive implementation:
+
+```default
+ Procedure buildHeap(a[1..n] : T) :=
+        h := a
+        buildRecursive(1)
+
+Procedure buildHeapRecursive(i : Nat) :=
+    if 4*i <= n : // children are not leaves
+        buildHeapRecursive(2*i) // assert: heap property holds for left subtree
+        buildHeaprecursive(2*i + 1) // assert: heap property holds for right subtree
+    siftDown(i) //assert Heap property holds for subtree starting at i 
+```
+
+A simpler iterative one-liner:
+
+```default
+ Procudure buildHeapBackwards :=
+        for i := n/2 downto 1 :
+            siftDown(i)
+```
+
+$\lfloor i/2 \rfloor$ is the last non-leaf node. 
+
+
+Time complexity of these binary heap construction algorithms is $\mathbfcal{O}(n)$.
+
+#### Heapsort
+
+```default
+Procedure heapSort(a[1..n]<T>) :=
+        buildHeap(a) // O(n)
+        for i := n downto 2 do : 
+            h[i] := deleteMin(); // O(log(n))
+```
+
+Sorts in decreasing order in $\mathcal{O}(n\log(n))$, by removing the minimal element
+and writing the return value to the end of the array in place. 

@@ -14,12 +14,15 @@ book:
       chapters:
         - 03/01-lists.qmd
         - 03/02-arrays.qmd
+        - 05/01-sorting.qmd
 
   downloads: pdf
 
 number-depth: 2
 
 bibliography: references.bib
+
+highlight-style: pygments
 
 format:
   html:
