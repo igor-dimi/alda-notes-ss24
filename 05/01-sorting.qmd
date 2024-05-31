@@ -69,7 +69,99 @@ insertion_sort_print(a)
 
 ### Selection Sort
 
+explanation: 
+
+![selection sort](imgs/selection_sort.png){width="55%"}
+
+python implementation:
+
+```{python}
+def selection_sort(a) :
+    N = len(a)
+    j = 0
+    # sorted a[0..j-1] && a[0..j-1] <= a[j..N-1]
+    while (j < N) :
+        # find min a[j..N-1]
+        k = j
+        min = a[k]
+        i = j + 1
+        #a[k] == min == min(a[j .. i - 1])
+        while (i < N) :
+            if a[i] < min :
+                min = a[i]
+                k = i
+            i = i + 1
+        # k = j + find_min(a[j :])
+        a[j], a[k] = a[k], a[j]
+        j = j + 1
+    return a
+
+
+
+```
+
+we test this on some random arrays:
+
+```{python}
+for i in range (2, 8) :
+    randarr = np.random.randint(-50, 50, i)
+    print("in:  ", randarr)
+    print("out: ", selection_sort(randarr))
+```
+
 ### Bubble Sort
+
+Let `a : Array[0..N-1]<Nat>`. The bubble operation pushes the largest
+element to the end of the array:
+
+```{python}
+def bubble(a) :
+    N = len(a)
+    i = 0
+    # a[i] == max(a[0..i])
+    while i < N - 1:
+        if a[i] > a[i + 1] :
+            a[i], a[i+1] = a[i+1], a[i]
+        i = i + 1
+    # post-loop: i == N - 1
+    return a 
+
+bubble([-5, 10, 1, 3, 7, -2])
+```
+
+The code of this function is used inside `bubble_sort()`:
+
+```{python}
+def bubble_sort(a) :
+    N = len(a)
+    j = N
+    swapped = False
+    while True : # emulate do while loop
+        # sorted a[j .. N - 1] and a[0..j-1] <= a[j .. N - 1] 
+        while j > 0 :
+            i = 0
+            while i < j - 1 :
+                if a[i] > a[i + 1] :
+                    a[i], a[i + 1] = a[i + 1], a[i]
+                i = i + 1
+            j = j - 1
+        if not swapped : break # if no swaps performed at all, array already
+                               # sorted 
+    return a
+```
+
+We test on some arrays:
+
+```{python}
+for i in range (2, 8) :
+    randarr = np.random.randint(-50, 50, i)
+    print("in:  ", randarr)
+    print("out: ", bubble_sort(randarr))
+```
+
+Visual expalantion:
+
+![bubble sort](imgs/bubble_sort.png){width="55%"}
 
 ### Merge Sort
 
@@ -149,6 +241,68 @@ for i in range (2, 8) :
     print("out: ", quicksort(randarr))
 ```
 
+#### Quicksort Refinements
+
+pseudocode:
+
+```default
+Procedure qSort(a : Array<T>; l, r : Nat) := 
+    while r - l + 1 > n0 :
+        j := pick_pivot_pos(a, l, r)
+        swap(a[l], a[j]) // pivot is at the first position
+        p := a[l]  // p is the value of the pivot
+        i := l; j := r
+        do
+            while a[i] < p : i++; //skip over the elements 
+            while a[j] > p : j--; // already in the correct subarray
+            if i <= j : 
+                swap(a[i], a[j])
+                i++
+                j--
+        while i <= j
+        qSort(a, l, j)
+        qSort(a, i, r)
+```
+
+cpp implementation including testing for `{3, 6, 8, 1, 0, 7, 2, 4, 5, 9}`
+
+```cpp
+#include <iostream>
+
+void qSort(int* a, int l, int r)
+{
+    if (r <= l) return;
+    int p = a[0]; // first element is pivot
+    int i = l;
+    int j = r;
+    do {
+        while (a[i] < p) i++;
+        while (a[j] > p) j--;
+        if (i <= j) {// partitioning is not complete 
+            int temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+            i++;
+            j--;
+        }
+    } while (i <= j);
+    // i > j
+    qSort(a, l, j);
+    qSort(a, i, r);
+}
+
+int main(int argc, const char** argv) {
+    int a[] = {3, 6, 8, 1, 0, 7, 2, 4, 5, 9};
+    for (int i = 0; i < 9; i++)
+        std::cout << a[i] << ", "; 
+    std::cout << a[9] << std::endl;
+    return 0;
+}
+```
+
+
+
+
 
 ## Priority Queues and Heap Data Structure 
 
@@ -206,8 +360,8 @@ Class BinaryHeapPQ(capacity: Nat)<T> :=
     Procedure insert(e : T) :=
         assert size < capacity
         size++
-        h[n] := e
-        siftUp(n)
+        h[size] := e
+        siftUp(size)
     
     Procedure siftUp(i : Nat) := 
         // assert Heap-property violated at most at position i
@@ -217,8 +371,8 @@ Class BinaryHeapPQ(capacity: Nat)<T> :=
     
     Procedure popMin : T :=
         result = h[1] : T
-        h[1] := h[n]
-        n--
+        h[1] := h[size]
+        size--
         siftDown(1)
         return result
     
@@ -231,14 +385,16 @@ Class BinaryHeapPQ(capacity: Nat)<T> :=
         //no right child exists or left child is smaller than right
             m := 2*i
         else : m := 2*i + 1
-        siftDown(m)
+        if h[i] > h[m] :
+            swap(h[i], h[m])
+            siftDown(m)
 
     Procedure buildHeap(a[1..n]<T>) :=
         h := a
         buildRecursive(1)
 
     Procedure buildHeapRecursive(i : Nat) :=
-        if 4*i <= n : // children are not leaves
+        if 4*i <= size : // children are not leaves
             buildHeapRecursive(2*i) // assert: heap property holds for left subtree
             buildHeaprecursive(2*i + 1) // assert: heap property holds for right subtree
         siftDown(i) //assert Heap property holds for subtree starting at i 
@@ -292,8 +448,9 @@ Procedure siftDown (i : Nat)
     if 2*i + 1 > n or h[2*i] <= h[2*i + 1] : 
     //no right child exists or left child is smaller than right
         m := 2*i
-    else : m := 2*i + 1
-    siftDown(m)
+   if h[i] > h[m] :
+            swap(h[i], h[m])
+            siftDown(m)   else : m := 2*i + 1
 ```
 
 Illustration of pop min:
