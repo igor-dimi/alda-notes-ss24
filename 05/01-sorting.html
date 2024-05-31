@@ -275,7 +275,7 @@ window.Quarto = {
 <h2 data-number="4.1" class="anchored" data-anchor-id="sorting-algorithms"><span class="header-section-number">4.1</span> Sorting Algorithms</h2>
 <section id="insertion-sort" class="level3">
 <h3 class="anchored" data-anchor-id="insertion-sort">Insertion Sort</h3>
-<div id="23eb2826" class="cell" data-execution_count="1">
+<div id="32441755" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insertion_sort(a) :</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(a)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># i = 1</span></span>
@@ -296,29 +296,29 @@ window.Quarto = {
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>testing insertion sort for some inputs:</p>
-<div id="dd8aeae6" class="cell" data-execution_count="2">
+<div id="35bb8b30" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">2</span>, <span class="dv">8</span>) :</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    randarr <span class="op">=</span> np.random.randint(<span class="dv">1</span>, <span class="dv">20</span>, i)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"in:  "</span>, randarr)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"out: "</span>, insertion_sort(randarr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>in:   [17 18]
-out:  [17 18]
-in:   [ 7 15  8]
-out:  [ 7  8 15]
-in:   [ 9  6  2 11]
-out:  [ 2  6  9 11]
-in:   [13  7  7 17  3]
-out:  [ 3  7  7 13 17]
-in:   [12  6  6  6 18 11]
-out:  [ 6  6  6 11 12 18]
-in:   [19  9  6 14  1  4 11]
-out:  [ 1  4  6  9 11 14 19]</code></pre>
+<pre><code>in:   [ 9 12]
+out:  [ 9 12]
+in:   [ 8 11  9]
+out:  [ 8  9 11]
+in:   [11  4  5 19]
+out:  [ 4  5 11 19]
+in:   [19 15 12 15 14]
+out:  [12 14 15 15 19]
+in:   [ 2 14  7 17 16 14]
+out:  [ 2  7 14 14 16 17]
+in:   [ 2 11 19  1 12 13  5]
+out:  [ 1  2  5 11 12 13 19]</code></pre>
 </div>
 </div>
 <p>Following illustrates the state after each insertion (ith iteration):</p>
-<div id="f82f84d3" class="cell" data-execution_count="3">
+<div id="12e0a954" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> insertion_sort_print(a) :</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(a)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># i = 1</span></span>
@@ -339,19 +339,19 @@ out:  [ 1  4  6  9 11 14 19]</code></pre>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"after insertion "</span>, i, <span class="st">": "</span>, a)</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return a</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="a222bf0a" class="cell" data-execution_count="4">
+<div id="32c144b1" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.random.randint(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">8</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"input:               "</span>, a)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>insertion_sort_print(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>input:                [ -8   4   5  -6   0 -13 -20   0]
-after insertion  1 :  [ -8   4   5  -6   0 -13 -20   0]
-after insertion  2 :  [ -8   4   5  -6   0 -13 -20   0]
-after insertion  3 :  [ -8  -6   4   5   0 -13 -20   0]
-after insertion  4 :  [ -8  -6   0   4   5 -13 -20   0]
-after insertion  5 :  [-13  -8  -6   0   4   5 -20   0]
-after insertion  6 :  [-20 -13  -8  -6   0   4   5   0]
-after insertion  7 :  [-20 -13  -8  -6   0   0   4   5]</code></pre>
+<pre><code>input:                [ 7 10  4 17  8 13 -3 -2]
+after insertion  1 :  [ 7 10  4 17  8 13 -3 -2]
+after insertion  2 :  [ 4  7 10 17  8 13 -3 -2]
+after insertion  3 :  [ 4  7 10 17  8 13 -3 -2]
+after insertion  4 :  [ 4  7  8 10 17 13 -3 -2]
+after insertion  5 :  [ 4  7  8 10 13 17 -3 -2]
+after insertion  6 :  [-3  4  7  8 10 13 17 -2]
+after insertion  7 :  [-3 -2  4  7  8 10 13 17]</code></pre>
 </div>
 </div>
 </section>
@@ -365,7 +365,7 @@ after insertion  7 :  [-20 -13  -8  -6   0   0   4   5]</code></pre>
 </figure>
 </div>
 <p>python implementation:</p>
-<div id="a35b1fef" class="cell" data-execution_count="5">
+<div id="c8647694" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> selection_sort(a) :</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">len</span>(a)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> <span class="dv">0</span></span>
@@ -387,31 +387,31 @@ after insertion  7 :  [-20 -13  -8  -6   0   0   4   5]</code></pre>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>we test this on some random arrays:</p>
-<div id="38348d22" class="cell" data-execution_count="6">
+<div id="efc1655d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">2</span>, <span class="dv">8</span>) :</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    randarr <span class="op">=</span> np.random.randint(<span class="op">-</span><span class="dv">50</span>, <span class="dv">50</span>, i)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"in:  "</span>, randarr)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"out: "</span>, selection_sort(randarr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>in:   [ 23 -26]
-out:  [-26  23]
-in:   [-44  36  23]
-out:  [-44  23  36]
-in:   [-35 -18  41 -50]
-out:  [-50 -35 -18  41]
-in:   [-48  43 -28  47   3]
-out:  [-48 -28   3  43  47]
-in:   [-50  34  -6  28 -10  -4]
-out:  [-50 -10  -6  -4  28  34]
-in:   [-29  20  48  16 -27  -4   5]
-out:  [-29 -27  -4   5  16  20  48]</code></pre>
+<pre><code>in:   [-17  16]
+out:  [-17  16]
+in:   [ 22 -16  42]
+out:  [-16  22  42]
+in:   [ 48  -9 -13 -28]
+out:  [-28 -13  -9  48]
+in:   [ 26  18 -12  45 -29]
+out:  [-29 -12  18  26  45]
+in:   [ -6  13  48 -39 -30  47]
+out:  [-39 -30  -6  13  47  48]
+in:   [ 13  -7 -41  23  21  -2 -27]
+out:  [-41 -27  -7  -2  13  21  23]</code></pre>
 </div>
 </div>
 </section>
 <section id="bubble-sort" class="level3">
 <h3 class="anchored" data-anchor-id="bubble-sort">Bubble Sort</h3>
 <p>Let <code>a : Array[0..N-1]&lt;Nat&gt;</code>. The bubble operation pushes the largest element to the end of the array:</p>
-<div id="048cb8dc" class="cell" data-execution_count="7">
+<div id="d39df675" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bubble(a) :</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">len</span>(a)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
@@ -429,7 +429,7 @@ out:  [-29 -27  -4   5  16  20  48]</code></pre>
 </div>
 </div>
 <p>The code of this function is used inside <code>bubble_sort()</code>:</p>
-<div id="c0414ad5" class="cell" data-execution_count="8">
+<div id="c79e4b09" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> bubble_sort(a) :</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">len</span>(a)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    j <span class="op">=</span> N</span>
@@ -448,24 +448,24 @@ out:  [-29 -27  -4   5  16  20  48]</code></pre>
 <span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We test on some arrays:</p>
-<div id="f0ba4eb6" class="cell" data-execution_count="9">
+<div id="4d977b91" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">2</span>, <span class="dv">8</span>) :</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    randarr <span class="op">=</span> np.random.randint(<span class="op">-</span><span class="dv">50</span>, <span class="dv">50</span>, i)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"in:  "</span>, randarr)</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"out: "</span>, bubble_sort(randarr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>in:   [ 3 25]
-out:  [ 3 25]
-in:   [  6 -11  23]
-out:  [-11   6  23]
-in:   [-48  -6   1   2]
-out:  [-48  -6   1   2]
-in:   [-14 -21  37 -43 -15]
-out:  [-43 -21 -15 -14  37]
-in:   [ 20 -16 -29  33 -14  36]
-out:  [-29 -16 -14  20  33  36]
-in:   [  4  13  36  20 -42  13 -38]
-out:  [-42 -38   4  13  13  20  36]</code></pre>
+<pre><code>in:   [-47 -49]
+out:  [-49 -47]
+in:   [ 39 -15   8]
+out:  [-15   8  39]
+in:   [ -8  10 -29  33]
+out:  [-29  -8  10  33]
+in:   [ 12   1  25  48 -15]
+out:  [-15   1  12  25  48]
+in:   [-33  28 -27   0  -3 -45]
+out:  [-45 -33 -27  -3   0  28]
+in:   [ -4  14 -24 -26  38 -14 -11]
+out:  [-26 -24 -14 -11  -4  14  38]</code></pre>
 </div>
 </div>
 <p>Visual expalantion:</p>
@@ -479,7 +479,7 @@ out:  [-42 -38   4  13  13  20  36]</code></pre>
 <section id="merge-sort" class="level3">
 <h3 class="anchored" data-anchor-id="merge-sort">Merge Sort</h3>
 <p>Given by the following python implementation:</p>
-<div id="e96b9099" class="cell" data-execution_count="10">
+<div id="c6388691" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge(a, b) :</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assert: a and b are sorted</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> []</span>
@@ -515,31 +515,31 @@ out:  [-42 -38   4  13  13  20  36]</code></pre>
 <span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span>  merge(merge_sort(a1), merge_sort(a2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We test on some arrays:</p>
-<div id="fe001209" class="cell" data-execution_count="11">
+<div id="a5375886" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">2</span>, <span class="dv">8</span>) :</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    randarr <span class="op">=</span> np.random.randint(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>, i)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"in:  "</span>, randarr)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"out: "</span>, merge_sort(randarr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>in:   [ -6 -14]
-out:  [-14, -6]
-in:   [  5  16 -14]
-out:  [-14, 5, 16]
-in:   [ 13 -13  18   0]
-out:  [-13, 0, 13, 18]
-in:   [  9   2  -9 -14 -15]
-out:  [-15, -14, -9, 2, 9]
-in:   [-2  8  3 -1 -5 19]
-out:  [-5, -2, -1, 3, 8, 19]
-in:   [-10  18 -13 -10  -6 -13 -16]
-out:  [-16, -13, -13, -10, -10, -6, 18]</code></pre>
+<pre><code>in:   [14 -2]
+out:  [-2, 14]
+in:   [-19  -8 -18]
+out:  [-19, -18, -8]
+in:   [ 13 -15  -6   1]
+out:  [-15, -6, 1, 13]
+in:   [-16  -5 -11 -16   6]
+out:  [-16, -16, -11, -5, 6]
+in:   [ 0 -1 -7  5 -2 -7]
+out:  [-7, -7, -2, -1, 0, 5]
+in:   [-20  15 -10  18 -12  13  -7]
+out:  [-20, -12, -10, -7, 13, 15, 18]</code></pre>
 </div>
 </div>
 </section>
 <section id="quick-sort" class="level3">
 <h3 class="anchored" data-anchor-id="quick-sort">Quick Sort</h3>
 <p>Naively:</p>
-<div id="33ac86a4" class="cell" data-execution_count="12">
+<div id="0f14f74b" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> quicksort(s) :</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(s) <span class="op">&lt;=</span> <span class="dv">1</span> : <span class="cf">return</span> s</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> s[<span class="bu">len</span>(s) <span class="op">//</span> <span class="dv">2</span>]</span>
@@ -555,24 +555,24 @@ out:  [-16, -13, -13, -10, -10, -6, 18]</code></pre>
 <span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> quicksort(a) <span class="op">+</span> b <span class="op">+</span> quicksort(c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>testing this naive implementation for some arrays:</p>
-<div id="9ef4d084" class="cell" data-execution_count="13">
+<div id="667ab34e" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">2</span>, <span class="dv">8</span>) :</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    randarr <span class="op">=</span> np.random.randint(<span class="op">-</span><span class="dv">10</span>, <span class="dv">20</span>, i)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"in:  "</span>, randarr)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"out: "</span>, quicksort(randarr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>in:   [-9 12]
-out:  [-9, 12]
-in:   [19 -5 -6]
-out:  [-6, -5, 19]
-in:   [-3 13 13 11]
-out:  [-3, 11, 13, 13]
-in:   [-7 -8 16 -8 11]
-out:  [-8, -8, -7, 11, 16]
-in:   [ 14 -10  -3  -9  18  14]
-out:  [-10, -9, -3, 14, 14, 18]
-in:   [ 8  1 16 14 16  3 15]
-out:  [1, 3, 8, 14, 15, 16, 16]</code></pre>
+<pre><code>in:   [-3 12]
+out:  [-3, 12]
+in:   [13 14  3]
+out:  [3, 13, 14]
+in:   [-4 -2 18 -3]
+out:  [-4, -3, -2, 18]
+in:   [11  9 -8 10 13]
+out:  [-8, 9, 10, 11, 13]
+in:   [ 9 11 -6 13  9 10]
+out:  [-6, 9, 9, 10, 11, 13]
+in:   [ 13 -10  -3  -4  14  16  15]
+out:  [-10, -4, -3, 13, 14, 15, 16]</code></pre>
 </div>
 </div>
 <section id="quicksort-refinements" class="level4">
@@ -600,7 +600,7 @@ out:  [1, 3, 8, 14, 15, 16, 16]</code></pre>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> <span class="fu">qSort</span><span class="op">(</span><span class="dt">int</span><span class="op">*</span> a<span class="op">,</span> <span class="dt">int</span> l<span class="op">,</span> <span class="dt">int</span> r<span class="op">)</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>r <span class="op">&lt;=</span> l<span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> a<span class="op">[</span><span class="dv">0</span><span class="op">];</span> <span class="co">// first element is pivot</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> p <span class="op">=</span> a<span class="op">[</span>l<span class="op">];</span> <span class="co">// first element is pivot</span></span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> i <span class="op">=</span> l<span class="op">;</span></span>
 <span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> j <span class="op">=</span> r<span class="op">;</span></span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span> <span class="op">{</span></span>
