@@ -272,7 +272,7 @@ cpp implementation including testing for `{3, 6, 8, 1, 0, 7, 2, 4, 5, 9}`
 void qSort(int* a, int l, int r)
 {
     if (r <= l) return;
-    int p = a[0]; // first element is pivot
+    int p = a[l]; // first element is pivot
     int i = l;
     int j = r;
     do {
