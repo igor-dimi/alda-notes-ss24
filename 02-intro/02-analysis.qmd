@@ -55,5 +55,42 @@ the base case, rearranging terms when necessary:
 
 See lecture slides for the complexity analysis of final expression. 
 
+## Master Theorem
+
+For reccurence relations of the form:
+
+$$
+    T(n) := 
+    \begin{cases}
+        a, &n = 1 \\
+        b\cdot n + c\cdot T(\frac{n}{d}), &n > 1
+    \end{cases}
+$$
+
+Master theorem gives the solutions:
+
+$$
+    T(n) =
+    \begin{cases}
+        \Theta(n), &c < d \\
+        \Theta(n\log(n)), &c = d \\
+        \Theta(n^{\log_b(d)}), &c > d \\
+    \end{cases}
+$$
+
+Example: **Merge Sort**. 
+
+Complexity of merge sort satisfies 
+the reccurence relation:
+
+\begin{align*}
+&T(1) = 1 \\
+&T(n) = \mathcal{O}(n) + 2\cdot T(\frac{n}{2}) 
+\end{align*}
+
+Thus with $c = 2 = d$ the second case of MT applies: 
+$T(n) = \Theta(n\log n)$
 
 ## Amortized Analysis
+
+
