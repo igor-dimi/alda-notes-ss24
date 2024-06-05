@@ -300,9 +300,77 @@ int main(int argc, const char** argv) {
 }
 ```
 
+### Bucket Sort
+
+So far in our model we assumed no information on keys; we didn't know whether 
+they are numbers, strings or any other data type. The only requirement was
+that any two keys where comparable. Our **comparison based** sorting algorithms
+relied solely on comparing any two keys. Theoretically it can be shown that
+the lower bound for such algorithms is $\Omega{n\log n}$. 
+
+Now if we extend our model
+
+```{python}
+# sorts keys in range [0, 100)
+def KSort(s) :
+    # initialize orray of length 100 with empty buckets
+    b = []
+    for i in range(100) : b.append([])
+    # place elements in buckets
+    for el in s : b[el].append(el)
+    # array holding results
+    res = []
+    # append elements in buckets to res
+    for i in range(100) :
+        for el in b[i] : res.append(el)
+    return res
+
+# testing:
+for i in range (2, 8) :
+    randarr = np.random.randint(0, 100, i)
+    print("in:  ", randarr)
+    print("out: ", KSort(randarr))
+```
+
+#### Radix Sort
+
+Employing a clever trick we can significantly increase the range of keys. In bucket sort we perform
+the sorting on the key itself. In radix sort we iteratively perform bucket sort on the digits of the keys,
+starting from the least significant digit. This works especially because bucket sort is a stable sorting 
+algorithm.
+
+This way we can sort keys in range $10^d - 1$. We have 10 buckets. Different bases can be chosen.
+
+We slightly modify previous bucket sort, where a `key` function is passed as an argument, with $d = 5$
 
 
+```{python}
+# sorts keys in range [0, 10)
+def KSort2(s, key) :
+    # initialize orray of length 100 with empty buckets
+    b = []
+    for i in range(10) : b.append([])
+    # place elements in buckets
+    for el in s : b[key(el)].append(el)
+    # array holding results
+    res = []
+    # append elements in buckets to res
+    for i in range(10) :
+        for el in b[i] : res.append(el)
+    return res
 
+# sorts keys in range [0, 10^5)
+def LSDRadixSort(a) :
+    for i in range(5) :
+        a = KSort2(a, lambda x : (x // 10**i) % 10)
+    return a
+
+# testing 
+for i in range(5, 10) :
+    randarr = np.random.randint(0, 10**5, i)
+    print("input: ", randarr)
+    print("output: ", LSDRadixSort(randarr))
+```
 
 ## Priority Queues and Heap Data Structure 
 
@@ -503,3 +571,4 @@ Procedure heapSort(a[1..n]<T>) :=
 
 Sorts in decreasing order in $\mathcal{O}(n\log(n))$, by removing the minimal element
 and writing the return value to the end of the array in place. 
+
