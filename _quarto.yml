@@ -28,6 +28,8 @@ format:
   html:
     theme: cosmo
   pdf: 
+    code-block-border-left: true
+    # code-block-bg: true
     include-in-header:
       - text: |
           \usepackage{cases}
