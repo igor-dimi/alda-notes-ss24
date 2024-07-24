@@ -1,3 +1,2 @@
-test_insert
-test_qsort
-test_sort
+test*
+!*.cc

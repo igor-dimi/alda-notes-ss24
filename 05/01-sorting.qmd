@@ -69,6 +69,10 @@ insertion_sort_print(a)
 
 ### Selection Sort
 
+**basic idea**: repeatedly find the smallest element in the unsorted tail region
+and move it to the front (via swapping).
+
+
 explanation: 
 
 ![selection sort](imgs/selection_sort.png){width="55%"}
@@ -164,6 +168,30 @@ Visual expalantion:
 ![bubble sort](imgs/bubble_sort.png){width="55%"}
 
 ### Merge Sort
+
+The input sequence is recursively divided into two sequnces of equal size.
+It is a straightforward application of the divide-and-conquer principle (recursion). 
+
+A helper function for merging two sorted sequences into one single sorted
+sequence is necessary. 
+
+Pseudocode:
+
+```default
+Function merge<T>(a, b : Sequence of T) := (
+    c := <>
+    // invariant: sorted(a) && 
+    //            sorted(b) && 
+    //            sorted(c) && 
+    //            c <= a && c <= b
+    while true :
+        if empty(a) : concat(c, b); return c;
+        if empty(b) : concat(c, a); return c;
+        if a.first() <= b.first() : c.moveBack(a.first());
+        else c.moveBack(b.first())
+)
+
+```
 
 Given by the following python implementation:
 
