@@ -1,3 +1,5 @@
+test_quick: quick_sort.cc
+	g++ -o test_quick quick_sort.cc
 test_merge: merge_sort.cc
 	g++ -o test_merge merge_sort.cc
 test_ins: ins_sort.cc

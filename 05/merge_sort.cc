@@ -70,6 +70,7 @@ int main(int argc, char const *argv[])
     int values[SIZE];
     for (int i = 0; i < SIZE; i++) values[i] = std::rand() % 100;
     print(values, SIZE);
+
     int now = time(0);
     int before = time(0);
     merge_sort(values, 0, SIZE - 1);
@@ -90,6 +91,8 @@ int main(int argc, char const *argv[])
         double interval = after - before;
         std::cout << size2 << " " << interval / rep << std::endl;
     }
+
+
 
 
     // std::cout << "before: " << before << std::endl;

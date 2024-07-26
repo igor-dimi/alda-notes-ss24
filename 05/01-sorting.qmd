@@ -243,7 +243,69 @@ for i in range (2, 8) :
 
 ### Quick Sort
 
-Naively:
+- similar to merge sort in that it is also a recursive divide and conquer algorithm
+- advantage over mergesort: no temporary arrays to hold partial results.
+- a pivot element is selected and the array is repetitively partitioned into regions
+  so that all elements in the left region is are no larger than the pivot, and all
+  elements in the right region are no less than the pivot:
+
+![quicksort partition](./imgs/quicksort-partitioning.png){width="75%"}
+
+- assuming that we have the partitioning function, quicksort then can be simply 
+  written as:
+
+```cpp
+void quicksort(int* a, int, from, int to)
+{
+    if (from >= to) return; // recursion base
+    int p = partition (a, from, to);
+    quicksort(a, from, p); // recursive call on the left partition
+    quicksort(a, p + 1, to) // recursive call on the right partition
+}
+```
+
+#### Quicksort Partition
+
+- First pick an element from the range. This element is called the **pivot**.
+  In the simplest version of quicksort the pivot is simply always chosen as the 
+  first element of the range. (This will lead to bad perfermance for sorted and almost
+  sorted arrays)
+- Assume that at some point of the execution we have the following state (this is the
+  invariant of the partitioning algorithm) :
+
+![quicksort partition invariant](./imgs/quicksort-partitioning-invariant.png)
+
+- executing following actions while `i < j` will preserve the invariant
+  ```default
+  i++; while (a[i] < pivot) i++;
+  j--; while (a[j] > pivot) j++;
+  if (i < j) {swap(a[i], a[j]);}
+  ```
+  to understand why consider the first two lines. After executing them following state
+  holds:
+
+  ![quicksort parition post-condition](./imgs/quicksort-partitioning-invariant-post.png)
+
+  final line swaps `a[i]` and `a[j]`, reastablishing the invariant.
+
+- full partitioning function is given as:
+  
+  ```cpp
+  int parition(int* a, int from, int to)
+  {
+    int pivot = a[from]; // pivot is simply the first element
+    int i = from - 1;
+    int j = to + 1;
+    while (i < j) {
+        i++; while (a[i] < pivot) i++;
+        j--; while (a[j] > pivot) j++;
+        if (i < j) swap(a[i], a[j]);
+    }
+    return j;
+  }
+  ```
+
+#### Quicksort Naively
 ```{python}
 def quicksort(s) :
     if len(s) <= 1 : return s
@@ -297,36 +359,61 @@ cpp implementation including testing for `{3, 6, 8, 1, 0, 7, 2, 4, 5, 9}`
 ```cpp
 #include <iostream>
 
-void qSort(int* a, int l, int r)
+// procedre for swapping integers
+void swap(int& x, int& y)
 {
-    if (r <= l) return;
-    int p = a[l]; // first element is pivot
-    int i = l;
-    int j = r;
-    do {
-        while (a[i] < p) i++;
-        while (a[j] > p) j--;
-        if (i <= j) {// partitioning is not complete 
-            int temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
-            i++;
-            j--;
-        }
-    } while (i <= j);
-    // i > j
-    qSort(a, l, j);
-    qSort(a, i, r);
+    int temp = x;
+    x = y;
+    y = temp;
 }
 
+// the partitioning function
+// simple version for pivot: always first element is chosen
+int partition(int* a, int from, int to)
+{
+    int pivot = a[from];
+    int i = from - 1;
+    int j = to + 1;
+    // invariant: a[f .. i] <= pivot && a[j .. t] >= pivot
+    while (i < j) {
+        i++; while (a[i] < pivot) i++;
+        j--; while (a[j] > pivot) j--;
+        if (i < j) swap(a[i], a[j]);
+    }
+    return j;
+}
+
+// quicksort itself
+void quicksort(int* a, int from, int to)
+{
+    if (from >= to) return;
+    int p = partition(a, from, to);
+    quicksort(a, from, p);
+    quicksort(a, p + 1, to);
+}
+
+// testing quicksort:
 int main(int argc, const char** argv) {
     int a[] = {3, 6, 8, 1, 0, 7, 2, 4, 5, 9};
-    for (int i = 0; i < 9; i++)
+    quicksort(a, 0, 9);
+    for (int i = 0; i < 10; i++)
         std::cout << a[i] << ", "; 
     std::cout << a[9] << std::endl;
     return 0;
 }
 ```
+
+#### Quicksort Analysis
+
+- Average: $\mathcal{O}(n\log(n))$
+- Worst-case: $\mathcal{O}(n^2)$. In the simplest case where the pivot is always chosen
+  as the first element worst case unfortunately occurs whenever the input sorted 
+  or almost sorted. Since almost sorted inputs are quite common in practice other 
+  strategies for chosing the pivot are preffered. 
+
+  Nevertheless by employing clever methods for chosing the pivot element we can almost always guarantee that quicksort runs in $\mathcal{O}(n\log(n))$.
+
+  Therefore in practice quicksort is preffered over mergesort.
 
 ### Bucket Sort
 

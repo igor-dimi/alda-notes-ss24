@@ -73,7 +73,7 @@ int main(int argc, char const *argv[])
         selection_sort(values, size2);
         int after = time(0);
         std::cout << size2 << " " << after - before << std::endl;
-    }
+    } 
     return 0;
 }
 
