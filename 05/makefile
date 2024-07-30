@@ -1,3 +1,7 @@
+test_bsearch: test_bsearch.cc bsearch_it.cc sort.hh qsort.cc search.hh
+	g++ -o test_bsearch test_bsearch.cc bsearch_it.cc qsort.cc
+test_lsearch: test_lsearch.cc
+	g++ -o test_lsearch test_lsearch.cc
 test_quick: quick_sort.cc
 	g++ -o test_quick quick_sort.cc
 test_merge: merge_sort.cc

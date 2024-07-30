@@ -1,4 +1,5 @@
 #include <iostream>
+#include "sort.hh"
 
 void qSort(int* a, int l, int r)
 {
@@ -22,18 +23,4 @@ void qSort(int* a, int l, int r)
     // i > j
     qSort(a, l, j);
     qSort(a, i, r);
-}
-
-int main(int argc, const char** argv) {
-    int a[] = {3, 6, 8, 1, 0, 7, 2, 4, 5, 9};
-    int b[] = {3, 2, -1};
-    qSort(b, 0, 2);
-    for (int i = 0; i < 3; i++ )
-        std::cout << b[i] << ", ";
-    std::cout << std::endl;
-    qSort(a, 0, 9);
-    for (int i = 0; i < 9; i++)
-        std::cout << a[i] << ", "; 
-    std::cout << a[9] << std::endl;
-    return 0;
 }
