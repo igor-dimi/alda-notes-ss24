@@ -249,7 +249,7 @@ for i in range (2, 8) :
   so that all elements in the left region is are no larger than the pivot, and all
   elements in the right region are no less than the pivot:
 
-![quicksort partition](./imgs/quicksort-partitioning.png){width="75%"}
+![quicksort partition](./imgs/quicksort-partitioning.png){width="55%"}
 
 - assuming that we have the partitioning function, quicksort then can be simply 
   written as:
@@ -273,7 +273,7 @@ void quicksort(int* a, int, from, int to)
 - Assume that at some point of the execution we have the following state (this is the
   invariant of the partitioning algorithm) :
 
-![quicksort partition invariant](./imgs/quicksort-partitioning-invariant.png)
+![quicksort partition invariant](./imgs/quicksort-partitioning-invariant.png){width="80%"}
 
 - executing following actions while `i < j` will preserve the invariant
   ```default
@@ -284,7 +284,7 @@ void quicksort(int* a, int, from, int to)
   to understand why consider the first two lines. After executing them following state
   holds:
 
-  ![quicksort parition post-condition](./imgs/quicksort-partitioning-invariant-post.png)
+  ![quicksort parition post-condition](./imgs/quicksort-partitioning-invariant-post.png){width="80%"}
 
   final line swaps `a[i]` and `a[j]`, reastablishing the invariant.
 

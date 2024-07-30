@@ -8,6 +8,7 @@ void insertion_sort(int* a, int N)
         int e = a[i];
         int j = i;
         if (e < a[0]) { // insert e to first position
+            // invariant: shifted a[j..i-1] to a[j+1..i]
             while (j > 0) {
                 a[j] = a[j - 1];
                 j--;
