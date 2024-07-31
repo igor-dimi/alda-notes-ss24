@@ -27,9 +27,13 @@ int main(int argc, char const *argv[])
     int target;
     std::cin >> target;
     int pos = bsearch_it(values, SIZE, target);
+    int pos2 = bsearch_it(values, SIZE, target);
     if (pos == -1) std::cout << target << " not found" << std::endl;
     else
         std::cout << target << " found in position " << pos << std::endl;
+    if (pos2 == -1) std::cout << target << " not found" << std::endl;
+    else
+        std::cout << target << " found in position " << pos2 << std::endl;
     
     return 0;
 }

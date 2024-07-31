@@ -1,3 +1,9 @@
+test_freqlin: test_freqlin.cc
+	g++ -o test_freqlin test_freqlin.cc
+test_mfreq: test_mfreq.cc
+	g++ -o test_mfreq test_mfreq.cc
+test_libsearch: test_libsearch.cc 
+	g++ -o test_libsearch test_libsearch.cc
 test_bsearch: test_bsearch.cc bsearch_it.cc sort.hh qsort.cc search.hh
 	g++ -o test_bsearch test_bsearch.cc bsearch_it.cc qsort.cc
 test_lsearch: test_lsearch.cc
