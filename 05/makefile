@@ -1,3 +1,7 @@
+test_shellsort: shell_sort.cc test_shellsort.cc sort.hh
+	g++ -o test_shellsort test_shellsort.cc shell_sort.cc insertion_sort.cc
+test_insertion02: insertion_sort02.cc
+	g++ -o test_insertion02 insertion_sort02.cc
 test_freqlin: test_freqlin.cc
 	g++ -o test_freqlin test_freqlin.cc
 test_mfreq: test_mfreq.cc
