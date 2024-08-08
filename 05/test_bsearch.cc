@@ -15,7 +15,7 @@ void print(int* a, int size)
 int main(int argc, char const *argv[])
 {
     std::srand(time(0));
-    const int SIZE = 9;
+    const int SIZE = 2;
     int values[SIZE];
     for (int i = 0; i < SIZE; i++) {
         values[i] = rand() % 100;
@@ -27,13 +27,13 @@ int main(int argc, char const *argv[])
     int target;
     std::cin >> target;
     int pos = bsearch_it(values, SIZE, target);
-    int pos2 = bsearch_it(values, SIZE, target);
+    // int pos2 = bsearch_rec(values, SIZE, target);
     if (pos == -1) std::cout << target << " not found" << std::endl;
     else
         std::cout << target << " found in position " << pos << std::endl;
-    if (pos2 == -1) std::cout << target << " not found" << std::endl;
-    else
-        std::cout << target << " found in position " << pos2 << std::endl;
+    // if (pos2 == -1) std::cout << target << " not found" << std::endl;
+    // else
+    //     std::cout << target << " found in position " << pos2 << std::endl;
     
     return 0;
 }
